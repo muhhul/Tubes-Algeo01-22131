@@ -56,7 +56,7 @@ public class bicubic {
 
         // Kamus Lokal
         String filePath, line;
-        int rows = 5, cols = 4;
+        int rows = 4, cols = 4;
         float a = 0, b = 0;
 
         //ALGORTIMA
@@ -83,18 +83,19 @@ public class bicubic {
             int i = 0, j;
             while ((line = bufferedReader.readLine()) != null && i < rows) {
                 String[] elemen = line.split(" ");
-                if (i == rows-1) {
-                    a = Float.parseFloat(elemen[0]);
-                    b = Float.parseFloat(elemen[1]);
-                } else {
+                
                 for (j = 0; j < cols; j++) {
                     matrix[i][j] = Float.parseFloat(elemen[j]);
                 }
-                }
-
+                
                 i++;
             }
+            String[] elemen = line.split(" ");
             
+            a = Float.parseFloat(elemen[0]);
+            b = Float.parseFloat(elemen[1]);
+            
+
             bufferedReader.close();
             fileReader.close();
             
@@ -111,8 +112,6 @@ public class bicubic {
 
         } catch (Exception e) {
             e.printStackTrace();
-        } {
-            
         }
 
         return null;
@@ -177,7 +176,7 @@ public class bicubic {
             System.out.println("Matrix kosong.");
             return;
         }
-        for (int i = 0; i < matrix.length-1; i++) {
+        for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++){ 
             System.out.print(matrix[i][j] + " ");
             }
@@ -185,27 +184,48 @@ public class bicubic {
         }
     }
 
-    public static float[] getCoefisien(float[][] matrix) {
+    public static float[] getCoefficient(float[][] matrix) {
 
         // KAMUS LOKAL
-
+        int i, j;
+        float[] coefficient;
+        float[][] X;
 
         // ALGORITMA
 
-        float[][] X = inverse(matrix);
-
         float[] Y = {matrix[1][1], matrix[1][2], matrix[2][1], matrix[2][2]};
 
-        float[] a = new float[4];
-
+        X = inverse(matrix);
+        
+        coefficient = new float[4];
+        
+        for (i = 0; i < matrix.length; i++) {
+            coefficient[i] = 0;
+            for (j = 0; j < matrix[i].length; j++) {
+                coefficient[i] += X[i][j] * Y[j];
+                }
+            }
+        
+        return coefficient;
         
 
     }
+
+
+
+
 public static void main(String[] args) {
+        // KAMUS
+        float[][] matrix;
+        float[] coefficient;
+        float a, b;
+
+        // ALGORITMA
         Scanner input = new Scanner(System.in);
         Map<String, Object> getMatrix = null;
 
         
+        // Metode mengambil matrix
         while (true) {
             System.out.print("Input matrix via file/user: ");
             String via = input.nextLine();
@@ -225,12 +245,23 @@ public static void main(String[] args) {
         }
         input.close();
 
-        float[][] matrix = (float[][])getMatrix.get("matrix");
-        float a = (float) getMatrix.get("a");
-        float b = (float) getMatrix.get("b");
+        matrix = (float[][])getMatrix.get("matrix");
+        a = (float) getMatrix.get("a");
+        b = (float) getMatrix.get("b");
+
+        
         displayMatrix(matrix);
         System.out.println("a = " +a);
         System.out.println("b = " +b);
+
+        coefficient = getCoefficient(matrix);
+
+        float result = coefficient[0] + coefficient[1]*a + coefficient[2]*b + coefficient[3]*a*b;
+
+        // Fungsi bicubic spline interplotation 
+        // Hasil dari f(a,b)
+        System.out.printf("f(%.2f,%.2f) = %.2f + %.2f(%.2f) + %.2f(%.2f) + %.2f(%.2f)(%.2f) = %.2f", a, b, coefficient[0], coefficient[1], a, coefficient[2], b, coefficient[3], a, b, result);
+
 
 
     }

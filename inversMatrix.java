@@ -185,9 +185,6 @@ public class inversMatrix {
         }
         input.close();
         
-        System.out.println();
-        System.out.println("Matriks yang ingin diinverse: ");
-        displayMatrix(matrix);
         float[][] identitas = CreateMatrixIdentitas(matrix);
         
         System.out.println();
