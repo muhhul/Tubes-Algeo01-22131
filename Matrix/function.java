@@ -1,16 +1,15 @@
-import java.util.Scanner;
+package Matrix;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Scanner;
 
-
-public class inversMatrix {
-    
+public class function {
     // Masukan matrix dari keyboard
-    public static float[][] inputFromUser() {
+    public static double[][] inputFromUser() {
         // KAMUS Lokal
         int n, i, j;
         Scanner masuk = null;
-        float[][] matrix = null;
+        double[][] matrix = null;
 
         // ALGORITMA
         try 
@@ -20,7 +19,7 @@ public class inversMatrix {
             System.out.print("Masukkan ukuran matriks square: ");
             n = masuk.nextInt();
 
-            matrix = new float[n][n];
+            matrix = new double[n][n];
             System.out.println();
             
             // Masukin elemen pada matriks
@@ -38,7 +37,7 @@ public class inversMatrix {
     }
 
     // Masukan matrix dari file txt
-    public static float[][] inputFromTxt() {
+    public static double[][] inputFromTxt() {
 
         // Kamus Lokal
         String filePath, line;
@@ -69,7 +68,7 @@ public class inversMatrix {
             fileReader =  new FileReader(filePath);
             bufferedReader = new BufferedReader(fileReader);
 
-            float[][] matrix = new float[rows][cols];
+            double[][] matrix = new double[rows][cols];
             
             // Membaca elemen pada matriks dan menyimpannya pada variabel matriks
             int i = 0, j;
@@ -84,7 +83,8 @@ public class inversMatrix {
             
             bufferedReader.close();
             fileReader.close();
-        
+            System.out.println("Matrix:");
+            displayMatrix(matrix);
             return matrix;
 
         } catch (Exception e) {
@@ -94,9 +94,9 @@ public class inversMatrix {
         return null;
 
     }
-    
+   
     // Menulis matriks
-    public static void displayMatrix(float[][] matrix) {
+    public static void displayMatrix(double[][] matrix) {
         if (matrix == null) {
             System.out.println("Matrix kosong.");
             return;
@@ -109,9 +109,9 @@ public class inversMatrix {
     }
 
     // Membuat sebuah matriks identitas untuk digunakan pada pencarian inverse matriks
-    public static float[][] CreateMatrixIdentitas(float[][] matrix) {
+    public static double[][] CreateMatrixIdentitas(double[][] matrix) {
 
-        float[][] identitas = new float[matrix.length][matrix[0].length];
+        double[][] identitas = new double[matrix.length][matrix[0].length];
         for (int i = 0; i <matrix.length; i++)
             for (int j = 0; j<matrix[i].length;j++){
                 if (i == j) {
@@ -123,78 +123,6 @@ public class inversMatrix {
         
         return identitas;
     }
-    
-    // Melakukan operasi inverse terhadap matrix
-    public static float[][] inverse(float[][] matrix) {
-        // KAMUS LOKAL
-        int n = matrix.length;
-        float pengkalian;
 
-        // Membuat sebuah matrix identitas
-        float[][] inverse = CreateMatrixIdentitas(matrix);
-        
-
-        // Menggunakan  Gaussian elimination
-        for (int i = 0; i < n; i++) {
-            pengkalian = matrix[i][i];
-            
-            // Cek apakah matriks singular atau tidak
-            if (pengkalian == 0.0f) {
-                throw new ArithmeticException("Matrix tersebut singular, tidak bisa diinverse.");
-            }
-            
-            // Mengalikan row dan elemen seterusnya
-            for (int j = 0; j < n; j++) {
-                matrix[i][j] /= pengkalian;
-                inverse[i][j] /= pengkalian;
-            }
-            
-            // Eliminasi elemen lain
-            for (int k = 0; k < n; k++) {
-                if (k != i) {
-                    pengkalian = matrix[k][i];
-                    for (int j = 0; j < n; j++) {
-                        matrix[k][j] -= pengkalian * matrix[i][j];
-                        inverse[k][j] -= pengkalian * inverse[i][j];
-                    }
-                }
-            }
-        }
-        
-        return inverse;
-    }
-    
-    public static void main (String[] args) {
-        
-        Scanner input = new Scanner(System.in);
-
-        float[][] matrix = null;
-        
-        while (true) {
-            System.out.print("Input matrix via file/user: ");
-            String via = input.nextLine();
-            if (via.equals("file") ){
-                matrix = inputFromTxt();
-                break;
-            } else if (via.equals("user")) {
-                matrix = inputFromUser();
-                break;
-            } else {
-                System.out.println("Input salah harap untuk input hanya \"file\" atau \"user\".");
-            }
-        }
-        input.close();
-        
-        float[][] identitas = CreateMatrixIdentitas(matrix);
-        
-        System.out.println();
-        System.out.println("Matriks Identias: ");
-        displayMatrix(identitas);
-        
-        System.out.println();
-        float[][] inverse = inverse(matrix);
-        System.out.println("Inverse Matriks: ");
-        displayMatrix(inverse);
-    }   
-    
+ 
 }

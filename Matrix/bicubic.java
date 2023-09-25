@@ -1,7 +1,8 @@
+package Matrix;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
-
 
 public class bicubic {
 
@@ -9,9 +10,9 @@ public class bicubic {
      public static Map<String, Object> inputFromUser() {
         // KAMUS Lokal
         int n = 4, i, j;
-        float a = 0, b = 0;
+        double a = 0, b = 0;
         Scanner masuk = null;
-        float[][] matrix = null;
+        double[][] matrix = null;
 
         // ALGORITMA
         try 
@@ -19,21 +20,21 @@ public class bicubic {
             // Masukin ukuran matriks
             masuk = new Scanner(System.in);
 
-            matrix = new float[n][n];
+            matrix = new double[n][n];
             System.out.println();
             
             // Masukin elemen pada matriks
             System.out.println("Masukkan elemen-elemen matriks 4x4: ");
             for (i = 0 ; i < n; i++)
                 for (j = 0; j < n; j++)
-                    matrix[i][j] = masuk.nextFloat();
+                    matrix[i][j] = masuk.nextDouble();
             
             do {
             System.out.println("Masukkan nilai a dan b.");
             System.out.print("Nilai a = ");
-            a = masuk.nextFloat();
+            a = masuk.nextDouble();
             System.out.print("Nilai b = ");
-            b = masuk.nextFloat();
+            b = masuk.nextDouble();
             } while (a < 0 || a > 1 || b < 0 || b > 1);
 
         }
@@ -57,7 +58,7 @@ public class bicubic {
         // Kamus Lokal
         String filePath, line;
         int rows = 4, cols = 4;
-        float a = 0, b = 0;
+        double a = 0, b = 0;
 
         //ALGORTIMA
         Scanner path = new Scanner(System.in);
@@ -77,7 +78,7 @@ public class bicubic {
             fileReader =  new FileReader(filePath);
             bufferedReader = new BufferedReader(fileReader);
 
-            float[][] matrix = new float[rows][cols];
+            double[][] matrix = new double[rows][cols];
             
             // Membaca elemen pada matriks dan menyimpannya pada variabel matriks
             int i = 0, j;
@@ -85,16 +86,19 @@ public class bicubic {
                 String[] elemen = line.split(" ");
                 
                 for (j = 0; j < cols; j++) {
-                    matrix[i][j] = Float.parseFloat(elemen[j]);
+                    matrix[i][j] = Double.parseDouble(elemen[j]);
                 }
                 
                 i++;
             }
             String[] elemen = line.split(" ");
             
-            a = Float.parseFloat(elemen[0]);
-            b = Float.parseFloat(elemen[1]);
+            a = Double.parseDouble(elemen[0]);
+            b = Double.parseDouble(elemen[1]);
             
+            function.displayMatrix(matrix);
+            System.out.println("a = " +a);
+            System.out.println("b = " +b);
 
             bufferedReader.close();
             fileReader.close();
@@ -118,86 +122,20 @@ public class bicubic {
 
     }
 
-    public static float[][] CreateMatrixIdentitas(float[][] matrix) {
-
-        float[][] identitas = new float[matrix.length][matrix[0].length];
-        for (int i = 0; i <matrix.length; i++)
-            for (int j = 0; j<matrix[i].length;j++){
-                if (i == j) {
-                    identitas[i][j] = 1;
-                } else {
-                    identitas[i][j] = 0;
-                }
-            }
-        
-        return identitas;
-    }
-
-    public static float[][] inverse(float[][] matrix) {
-        // KAMUS LOKAL
-        int n = matrix.length;
-        float pengkalian;
-
-        // Membuat sebuah matrix identitas
-        float[][] inverse = CreateMatrixIdentitas(matrix);
-        
-        // Menggunakan  Gaussian elimination
-        for (int i = 0; i < n; i++) {
-            pengkalian = matrix[i][i];
-            
-            // Cek apakah matriks singular atau tidak
-            if (pengkalian == 0.0f) {
-                throw new ArithmeticException("Matrix tersebut singular, tidak bisa diinverse.");
-            }
-            
-            // Mengalikan row dan elemen seterusnya
-            for (int j = 0; j < n; j++) {
-                matrix[i][j] /= pengkalian;
-                inverse[i][j] /= pengkalian;
-            }
-            
-            // Eliminasi elemen lain
-            for (int k = 0; k < n; k++) {
-                if (k != i) {
-                    pengkalian = matrix[k][i];
-                    for (int j = 0; j < n; j++) {
-                        matrix[k][j] -= pengkalian * matrix[i][j];
-                        inverse[k][j] -= pengkalian * inverse[i][j];
-                    }
-                }
-            }
-        }
-        
-        return inverse;
-    }
-    
-    public static void displayMatrix(float[][] matrix) {
-        if (matrix == null) {
-            System.out.println("Matrix kosong.");
-            return;
-        }
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++){ 
-            System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    public static float[] getCoefficient(float[][] matrix) {
+    public static double[] getCoefficient(double[][] matrix) {
 
         // KAMUS LOKAL
         int i, j;
-        float[] coefficient;
-        float[][] X;
+        double[] coefficient;
+        double[][] X;
 
         // ALGORITMA
 
-        float[] Y = {matrix[1][1], matrix[1][2], matrix[2][1], matrix[2][2]};
+        double[] Y = {matrix[1][1], matrix[1][2], matrix[2][1], matrix[2][2]};
 
-        X = inverse(matrix);
+        X = inversMatrix.inverse(matrix);
         
-        coefficient = new float[4];
+        coefficient = new double[4];
         
         for (i = 0; i < matrix.length; i++) {
             coefficient[i] = 0;
@@ -211,14 +149,22 @@ public class bicubic {
 
     }
 
+    public static void fungsiBicubic(double[][] matrix, double a, double b) {
+        
+        //Mendapatkan a dari rumus a = (X^-1)(Y)
+        double[] coefficient = getCoefficient(matrix);
+        
+        double result = coefficient[0] + coefficient[1]*a + coefficient[2]*b + coefficient[3]*a*b;
 
+        // Fungsi bicubic spline interplotation 
+        // Hasil dari f(a,b)
+        System.out.printf("f(%.2f,%.2f) = %.2f + %.2f(%.2f) + %.2f(%.2f) + %.2f(%.2f)(%.2f) = %.2f", a, b, coefficient[0], coefficient[1], a, coefficient[2], b, coefficient[3], a, b, result);
 
-
+    }
 public static void main(String[] args) {
         // KAMUS
-        float[][] matrix;
-        float[] coefficient;
-        float a, b;
+        double[][] matrix;
+        double a, b;
 
         // ALGORITMA
         Scanner input = new Scanner(System.in);
@@ -243,26 +189,14 @@ public static void main(String[] args) {
                 System.out.println("Input salah harap untuk input hanya \"file\" atau \"user\".");
             }
         }
-        input.close();
-
-        matrix = (float[][])getMatrix.get("matrix");
-        a = (float) getMatrix.get("a");
-        b = (float) getMatrix.get("b");
-
         
-        displayMatrix(matrix);
-        System.out.println("a = " +a);
-        System.out.println("b = " +b);
+        input.close();
+      
+        matrix = (double[][])getMatrix.get("matrix");
+        a = (double) getMatrix.get("a");
+        b = (double) getMatrix.get("b");
 
-        coefficient = getCoefficient(matrix);
-
-        float result = coefficient[0] + coefficient[1]*a + coefficient[2]*b + coefficient[3]*a*b;
-
-        // Fungsi bicubic spline interplotation 
-        // Hasil dari f(a,b)
-        System.out.printf("f(%.2f,%.2f) = %.2f + %.2f(%.2f) + %.2f(%.2f) + %.2f(%.2f)(%.2f) = %.2f", a, b, coefficient[0], coefficient[1], a, coefficient[2], b, coefficient[3], a, b, result);
-
-
+        fungsiBicubic(matrix, a, b);
 
     }
 }
