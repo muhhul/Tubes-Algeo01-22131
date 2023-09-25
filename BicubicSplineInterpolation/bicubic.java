@@ -1,8 +1,10 @@
-package Matrix;
-
+package BicubicSplineInterpolation;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
+
+import Matrix.function;
+import Matrix.inversMatrix;
 
 public class bicubic {
 
