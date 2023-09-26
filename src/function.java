@@ -1,4 +1,4 @@
-package Matrix;
+package src;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
@@ -94,7 +94,6 @@ public class function {
         return null;
 
     }
-   
     // Menulis matriks
     public static void displayMatrix(double[][] matrix) {
         if (matrix == null) {
@@ -107,7 +106,6 @@ public class function {
             System.out.println();
         }
     }
-
     // Membuat sebuah matriks identitas untuk digunakan pada pencarian inverse matriks
     public static double[][] CreateMatrixIdentitas(double[][] matrix) {
 
@@ -123,7 +121,6 @@ public class function {
         
         return identitas;
     }
-
     // Mengembalikan hasil tranpose matrix
     public static double[][] Transpose(double[][] matrix) {
         // KAMUS LOKAL
@@ -140,7 +137,6 @@ public class function {
     
         return temp;
     }
-    
     // Mencari hasil determinant dengan menggunakan cara cofactor
     public static double determinant(double[][] matrix) {
         int n = matrix.length; // 
@@ -177,7 +173,6 @@ public class function {
     
         return det;
     }
-    
     public static double[][] matrixCofactor(double[][] matrix) {
         int n = matrix.length;
         double[][] cofactor = new double[n][n]; // Membuat matrix baru berupa cofactor
@@ -207,8 +202,6 @@ public class function {
     
         return cofactor;
     }
-    
-    
     public static double[][] matrixAdjoin(double[][] matrix) {
         // Mendapatkan cofactor dari matrix
         double[][] cofactor = matrixCofactor(matrix);
@@ -217,8 +210,6 @@ public class function {
     
         return adjoint;
     }
-    
-    
     public static void main(String[] args) {
         double[][] matrix = inputFromTxt();
         System.out.println();

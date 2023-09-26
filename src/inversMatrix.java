@@ -1,4 +1,4 @@
-package Matrix;
+package src;
 import java.util.Scanner;
 
 public class inversMatrix {
@@ -42,7 +42,6 @@ public class inversMatrix {
         
         return inverse;
     }
-    
     
     // Melakukan operasi inverse terhadap matrix dengan menggunakan metode Adjoint
     public static double[][] inverseAdjoint(double[][] matrix) {
