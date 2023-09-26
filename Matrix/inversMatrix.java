@@ -3,17 +3,17 @@ import java.util.Scanner;
 
 public class inversMatrix {
 
-    // Melakukan operasi inverse terhadap matrix
-    public static double[][] inverse(double[][] matrix) {
+    // Melakukan operasi inverse terhadap matrix dengan menggunakan metode Gauss Jordan
+    public static double[][] inverseGaussJordan(double[][] matrix) {
         // KAMUS LOKAL
         int n = matrix.length;
         double pengkalian;
-
+        
         // Membuat sebuah matrix identitas
         double[][] inverse = function.CreateMatrixIdentitas(matrix);
         
-
-        // Menggunakan  Gaussian elimination
+        
+        // Menggunakan  Gauss-Jordan elimination
         for (int i = 0; i < n; i++) {
             pengkalian = matrix[i][i];
             
@@ -43,6 +43,29 @@ public class inversMatrix {
         return inverse;
     }
     
+    
+    // Melakukan operasi inverse terhadap matrix dengan menggunakan metode Adjoint
+    public static double[][] inverseAdjoint(double[][] matrix) {
+        // KAMUS LOKAL
+        double determinant = function.determinant(matrix);
+        double pengkalian = 1 / determinant;
+        double[][] Adjoin = function.matrixAdjoin(matrix);
+        double[][] inverse = new double[matrix.length][matrix.length];
+        int i, j;
+
+        // ALGORITMA
+
+        // A^-1 = 1/det(matrix) x Adj(matrix)
+        for (i = 0; i < matrix.length; i++) {
+            for (j = 0; j < matrix[i].length; j++) {
+                inverse[i][j] = pengkalian * Adjoin[i][j];
+            }
+        }
+
+        return inverse;
+
+    }
+   
     public static void main (String[] args) {
         
         Scanner input = new Scanner(System.in);
@@ -71,9 +94,8 @@ public class inversMatrix {
         function.displayMatrix(identitas);
         
         System.out.println();
-        double[][] inverse = inverse(matrix);
+        double[][] inverse = inverseAdjoint(matrix);
         System.out.println("Inverse Matriks: ");
         function.displayMatrix(inverse);
     }   
-    
 }

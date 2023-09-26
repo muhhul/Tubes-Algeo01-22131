@@ -135,7 +135,7 @@ public class bicubic {
 
         double[] Y = {matrix[1][1], matrix[1][2], matrix[2][1], matrix[2][2]};
 
-        X = inversMatrix.inverse(matrix);
+        X = inversMatrix.inverseGaussJordan(matrix);
         
         coefficient = new double[4];
         
