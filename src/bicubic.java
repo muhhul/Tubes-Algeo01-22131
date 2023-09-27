@@ -160,7 +160,7 @@ public class bicubic {
         System.out.printf("f(%.2f,%.2f) = %.2f + %.2f(%.2f) + %.2f(%.2f) + %.2f(%.2f)(%.2f) = %.2f", a, b, coefficient[0], coefficient[1], a, coefficient[2], b, coefficient[3], a, b, result);
 
     }
-public static void main(String[] args) {
+    public static void main(String[] args) {
         // KAMUS
         double[][] matrix;
         double a, b;

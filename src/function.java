@@ -20,7 +20,6 @@ public class function {
             n = masuk.nextInt();
 
             matrix = new double[n][n];
-            System.out.println();
             
             // Masukin elemen pada matriks
             System.out.println("Masukkan elemen-elemen matriks: ");
@@ -35,7 +34,6 @@ public class function {
         }
         return matrix;
     }
-
     // Masukan matrix dari file txt
     public static double[][] inputFromTxt() {
 
@@ -173,6 +171,7 @@ public class function {
     
         return det;
     }
+    // Membuat matrix cofactor
     public static double[][] matrixCofactor(double[][] matrix) {
         int n = matrix.length;
         double[][] cofactor = new double[n][n]; // Membuat matrix baru berupa cofactor
@@ -202,6 +201,7 @@ public class function {
     
         return cofactor;
     }
+    // Membuat matrix adjoin
     public static double[][] matrixAdjoin(double[][] matrix) {
         // Mendapatkan cofactor dari matrix
         double[][] cofactor = matrixCofactor(matrix);
@@ -210,14 +210,20 @@ public class function {
     
         return adjoint;
     }
-    public static void main(String[] args) {
-        double[][] matrix = inputFromTxt();
-        System.out.println();
+    // Copas matrix
+    public static double[][] copyMatrix(double[][] matrix) {
+        // KAMUS LOKAL
+        int i, j;
 
-        double[][] Adjoin = matrixAdjoin(matrix);
-        displayMatrix(Adjoin);
+        // ALGORITMA
+        double[][] copas = new double[matrix.length][matrix[0].length];
+        for (i = 0; i < matrix.length; i++) {
+            for (j = 0; j < matrix[i].length; j++) {
+                copas[i][j] = matrix[i][j];
+            }
+        }
+        return copas;
     }
-
 
 
 }
