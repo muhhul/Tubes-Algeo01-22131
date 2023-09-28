@@ -1,4 +1,4 @@
-package general;
+package General;
 
 public class OperasiMatriks {
 
@@ -43,9 +43,9 @@ public class OperasiMatriks {
 
         // ALGORITMA
         double[][] copas = new double[matrix.length][matrix[0].length];
-        
+
         for (i = 0; i < matrix.length; i++) {
-            for (j = 0; j < matrix[i].length;j++) {
+            for (j = 0; j < matrix[i].length; j++) {
                 copas[i][j] = matrix[i][j];
             }
         }
@@ -89,17 +89,8 @@ public class OperasiMatriks {
         return det;
     }
 
-    public static double determinanGauss(double[][] matriks) {
-        return 0.0;
-    }
-    public static double determinanGaussJ(double[][] matriks) {
-        return 0.0;
-    }
-    public static double determinanInvers(double[][] matriks) {
-        return 0.0;
-    }
-    public static double determinanCramer(double[][] matriks) {
-        return 0.0;
+    public static double[][] determinanReduksi(double[][] matriks) {
+        return matriks;
     }
 
     public static double[][] matrixCofactor(double[][] matrix) {
@@ -145,11 +136,11 @@ public class OperasiMatriks {
     }
 
     public static void main(String[] args) {
-        double[][] matrix = general.Fungsi.inputFromTxt();
+        double[][] matrix = General.Fungsi.inputFromTxt();
         System.out.println();
 
         double[][] Adjoin = matrixAdjoin(matrix);
-        general.Fungsi.displayMatrix(Adjoin);
+        General.Fungsi.displayMatrix(Adjoin);
     }
 
 }

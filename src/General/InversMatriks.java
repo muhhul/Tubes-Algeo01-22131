@@ -1,7 +1,8 @@
-package general;
+package General;
 import java.util.Scanner;
 
-public class inversMatrix {
+
+public class InversMatriks {
 
     // Melakukan operasi inverse terhadap matrix dengan menggunakan metode Gauss Jordan
     public static double[][] inverseGaussJordan(double[][] matrix) {
@@ -11,7 +12,6 @@ public class inversMatrix {
         
         // Membuat sebuah matrix identitas
         double[][] inverse = OperasiMatriks.CreateMatrixIdentitas(matrix);
-        
         
         // Menggunakan  Gauss-Jordan elimination
         for (int i = 0; i < n; i++) {

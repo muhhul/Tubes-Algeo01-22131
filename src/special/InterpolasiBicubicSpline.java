@@ -1,14 +1,12 @@
-package special;
+package Special;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
 
-import general.Fungsi;
-import general.dsdsds;
-
-public class InterpolasiBicubicSpline {
-
+import General.Fungsi;
+import General.InversMatriks;
+public class InterpolasiBicubicSpline {    
     // Masukan matrix dari keyboard
     public static Map<String, Object> inputFromUser() {
         // KAMUS Lokal
@@ -133,7 +131,7 @@ public class InterpolasiBicubicSpline {
 
         double[] Y = { matrix[1][1], matrix[1][2], matrix[2][1], matrix[2][2] };
 
-        X = dsdsds.inverseGaussJordan(matrix);
+        X = InversMatriks.inverseGaussJordan(matrix);
 
         coefficient = new double[4];
 
