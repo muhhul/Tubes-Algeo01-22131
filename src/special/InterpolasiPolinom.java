@@ -1,4 +1,4 @@
-package special;
+package Special;
 
 public class InterpolasiPolinom {
     

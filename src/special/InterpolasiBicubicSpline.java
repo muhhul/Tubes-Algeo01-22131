@@ -1,11 +1,12 @@
-package special;
+package Special;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
-import general.Fungsi;
-import general.inversMatrix;
-import general.OperasiMatriks;
+
+import General.Fungsi;
+import General.OperasiMatriks;
+import General.InversMatriks;
 
 public class InterpolasiBicubicSpline {
 
@@ -148,7 +149,7 @@ public class InterpolasiBicubicSpline {
         }
 
         // Inverse matrix Bicubic 
-        double [][] MbicubicInverse = inversMatrix.inverseGaussJordan(Mbicubic);
+        double [][] MbicubicInverse = InversMatriks.inverseGaussJordan(Mbicubic);
 
         // Matrix 4x4 to matrix 16x1
         for(i = 0; i < matrix.length; i++) {

@@ -1,16 +1,75 @@
-package general;
+package General;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Fungsi {
+    public static Scanner input;
+    public static FileWriter fw;
+    public static String path = "";
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+
+    // Fungsi mengubah matriks menjadi string sesuai dengan format print
+    public static String matriksKeString(double[][] M) {
+        String hasil = "";
+        for (int i = 0; i < M.length; i++) {
+            for (int j = 0; j < M[0].length; j++) {
+                hasil += M[i][j] + " ";
+            }
+            hasil += "\n";
+        }
+        return hasil;
+    }
+
+    public static void CreateFile() {
+        String dir;
+        String directory = System.getProperty("user.dir");
+        directory = directory.substring(directory.lastIndexOf("\\") + 1);
+        Date date = new Date();
+
+        if (directory.equals("bin")) {
+            dir = "..\\test\\result\\";
+        } else {
+            dir = "\\test\\result\\";
+        }
+        File file = new File(dir + dateFormat.format(date) + ".txt");
+
+        try {
+            file.createNewFile();
+            path = file.getAbsolutePath();
+        } catch (IOException e) {
+            System.out.println("Cannot create file");
+        }
+    }
+
+    // Fungsi untuk menambahkan string ke file
+    public static void tulisKeFile(String konten) {
+        try {
+            CreateFile();
+            Date date = new Date();
+            path = "test\\result\\" + dateFormat.format(date) + ".txt";
+            fw = new FileWriter(path);
+            fw.write("File dibuat pada: " + dateFormat.format(date) + "\n");
+            fw.write(konten);
+            fw.close();
+            System.out.println("Penulisan file berhasil!");
+        } catch (IOException e) {
+            System.out.println("Terjadi error dalam penulisan file!");
+        }
+    }
+
     // clear cmd
-    public static void clearScreen() {  
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();  
-    }  
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     // display menu options
     public static void menu() {
         clearScreen();
@@ -22,16 +81,6 @@ public class Fungsi {
         System.out.println("5. Interpolasi Bicubic Spline");
         System.out.println("6. Regresi Linear Berganda");
         System.out.println("7. Keluar\n");
-        System.out.print("Pilihan:");
-    }
-
-    // display sub-menu options
-    public static void subMenu() {
-        clearScreen();
-        System.out.println("1. Metode Eliminasi Gauss");
-        System.out.println("2. Metode Eliminasi Gauss-Jordan");
-        System.out.println("3. Metode Matriks Balikan");
-        System.out.println("4. Kaidah Cramer");
         System.out.print("Pilihan:");
     }
 
@@ -190,4 +239,5 @@ public class Fungsi {
             System.out.println();
         }
     }
+
 }

@@ -1,4 +1,4 @@
-package special;
+package Special;
 
 public class SPL {
     public static void splGauss(double[][] matriks) {
