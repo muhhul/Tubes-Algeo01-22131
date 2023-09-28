@@ -102,6 +102,30 @@ public class OperasiMatriks {
         return 0.0;
     }
 
+    public static double[][] multiplyMatrix(double[][] m1, double[][] m2) {
+        int rows1 = m1.length;
+        int cols1 = m1[0].length;
+        int cols2 = m2[0].length;
+        
+        if (cols1 != m2.length) {
+            throw new IllegalArgumentException("Matrix dimensions are not compatible for multiplication.");
+        }
+        
+        double[][] hasil = new double[rows1][cols2];
+        
+        for (int i = 0; i < rows1; i++) {
+            for (int j = 0; j < cols2; j++) {
+                double sum = 0.0;
+                for (int k = 0; k < cols1; k++) {
+                    sum += m1[i][k] * m2[k][j];
+                }
+                hasil[i][j] = sum;
+            }
+        }
+        
+        return hasil;
+    }
+    
     public static double[][] matrixCofactor(double[][] matrix) {
         int n = matrix.length;
         double[][] cofactor = new double[n][n]; // Membuat matrix baru berupa cofactor
@@ -144,12 +168,5 @@ public class OperasiMatriks {
         return adjoint;
     }
 
-    public static void main(String[] args) {
-        double[][] matrix = general.Fungsi.inputFromTxt();
-        System.out.println();
-
-        double[][] Adjoin = matrixAdjoin(matrix);
-        general.Fungsi.displayMatrix(Adjoin);
-    }
 
 }

@@ -3,9 +3,9 @@ package special;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
-
 import general.Fungsi;
-import general.dsdsds;
+import general.inversMatrix;
+import general.OperasiMatriks;
 
 public class InterpolasiBicubicSpline {
 
@@ -122,44 +122,54 @@ public class InterpolasiBicubicSpline {
 
     }
 
-    public static double[] getCoefficient(double[][] matrix) {
 
-        // KAMUS LOKAL
-        int i, j;
-        double[] coefficient;
-        double[][] X;
+    public static void fungsiBicubic(double[][] matrix, double a, double b) {
+        //KAMUS LOKAL
+        int i, j, k = 0, Bi, Bj, x, y;
+        double hasil = 0.0;
+        
+        //ALGORITMA
+        double[][] Mbicubic = new double[16][16];
+        double[][] Y = new double[16][1];
 
-        // ALGORITMA
-
-        double[] Y = { matrix[1][1], matrix[1][2], matrix[2][1], matrix[2][2] };
-
-        X = dsdsds.inverseGaussJordan(matrix);
-
-        coefficient = new double[4];
-
-        for (i = 0; i < matrix.length; i++) {
-            coefficient[i] = 0;
-            for (j = 0; j < matrix[i].length; j++) {
-                coefficient[i] += X[i][j] * Y[j];
+        // Konstruksi matrix bicubic interpolation
+        Bi = 0;
+        for (x = -1; x < 3; x++){
+            for (y = -1; y < 3; y++) {
+                Bj = 0;
+                for( i = 0; i < 4; i++) {
+                    for (j = 0; j < 4; j++) {
+                        Mbicubic[Bi][Bj] = Math.pow(x, i) * Math.pow(y, j);
+                        Bj++;
+                    }
+                }
+                Bi++;
             }
         }
 
-        return coefficient;
+        // Inverse matrix Bicubic 
+        double [][] MbicubicInverse = inversMatrix.inverseGaussJordan(Mbicubic);
 
-    }
+        // Matrix 4x4 to matrix 16x1
+        for(i = 0; i < matrix.length; i++) {
+            for (j = 0; j < matrix[i].length; j++) {
+                Y[k][0] = matrix[i][j];
+                k++;
+            }
+        }
 
-    public static void fungsiBicubic(double[][] matrix, double a, double b) {
+        // Mengalikan inverse bicubic dengan matrix 16x1 untuk mendapatkan koefisian (a) ---> Y x X^(-1) = a 
+        double[][] koefisien = OperasiMatriks.multiplyMatrix(MbicubicInverse, Y);
 
-        // Mendapatkan a dari rumus a = (X^-1)(Y)
-        double[] coefficient = getCoefficient(matrix);
+        k = 0;
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4; j++) {
+                hasil += koefisien[k][0] * Math.pow(a, i) * Math.pow(b, j);
+                k++;
+            }
+        }
 
-        double result = coefficient[0] + coefficient[1] * a + coefficient[2] * b + coefficient[3] * a * b;
-
-        // Fungsi bicubic spline interplotation
-        // Hasil dari f(a,b)
-        System.out.printf("f(%.2f,%.2f) = %.2f + %.2f(%.2f) + %.2f(%.2f) + %.2f(%.2f)(%.2f) = %.2f", a, b,
-                coefficient[0], coefficient[1], a, coefficient[2], b, coefficient[3], a, b, result);
-
+        System.out.printf("Hasil dari fungsi bicubic f(%.2f,%.2f) = %.2f\n", a, b, hasil);
     }
 
     public static void main(String[] args) {
@@ -173,12 +183,13 @@ public class InterpolasiBicubicSpline {
 
         // Metode mengambil matrix
         while (true) {
-            System.out.print("Input matrix via file/user: ");
+            System.out.println("Input matrix via:\n1. File (.txt)\n2. User");
+            System.out.print("Via = ");
             String via = input.nextLine();
-            if (via.equals("user")) {
+            if (via.equals("1")) {
                 getMatrix = inputFromUser();
                 break;
-            } else if (via.equals("file")) {
+            } else if (via.equals("2")) {
                 getMatrix = inputFromTxt();
                 if (getMatrix != null) {
                     break;
@@ -186,7 +197,7 @@ public class InterpolasiBicubicSpline {
                 System.out.println("Nilai a dan b harus dalam rentang [0..1]");
                 System.exit(0);
             } else {
-                System.out.println("Input salah harap untuk input hanya \"file\" atau \"user\".");
+                System.out.println("Input salah harap untuk input hanya \"1\" atau \"2\".");
             }
         }
 

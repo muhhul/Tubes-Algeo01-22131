@@ -2,6 +2,7 @@ package general;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Fungsi {
@@ -24,7 +25,7 @@ public class Fungsi {
         System.out.print("Pilihan:");
     }
 
-// display sub-menu options
+    // display sub-menu options
     public static void subMenu() {
         clearScreen();
         System.out.println("1. Metode Eliminasi Gauss");
@@ -70,7 +71,7 @@ public class Fungsi {
         return matrix;
     }
 
-    // Masukan matrix dari file txt
+    // Masukan matrix dari file (.txt)
     public static double[][] inputFromTxt() {
 
         // Kamus Lokal
@@ -128,8 +129,56 @@ public class Fungsi {
         return null;
 
     }
+    
+    // Salin matrix ke file (.txt)
+    public static void salinMatrixToTxt(double[][] matrix) {
+        //KAMUS LOKAL
+        int i, j;
 
-    // Menulis matriks
+        //ALGORITMA
+        Scanner input = new Scanner(System.in);
+        System.out.print("File path yang ingin anda salin matrix: ");
+        String FilePath = input.nextLine();
+        try {
+            FileWriter writer = new FileWriter(FilePath);
+            for (i = 0; i < matrix.length; i++) {
+                for (j = 0; j <matrix[i].length; j ++) {
+                    writer.write(matrix[i][j] + " ");
+                }
+                writer.write("\n");
+            }
+        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            input.close();
+        }
+        }
+    
+    // Salin hasil ke file (.txt)
+    public static void salinToTxt(double result) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("File path yang ingin anda salin matrix: ");
+        String FilePath = input.nextLine();
+
+        try {
+            FileWriter writer = new FileWriter(FilePath);
+            writer.write(Double.toString(result));
+            writer.close();
+        }
+        
+         catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            input.close();
+        }
+        
+
+    }
+    
+    // Menulis matriks ke layar
     public static void displayMatrix(double[][] matrix) {
         if (matrix == null) {
             System.out.println("Matrix kosong.");
