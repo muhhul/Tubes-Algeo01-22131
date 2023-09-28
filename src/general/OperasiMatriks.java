@@ -36,6 +36,23 @@ public class OperasiMatriks {
         return temp;
     }
 
+    // Menyalin matriks
+    public static double[][] copyMatrix(double[][] matrix) {
+        // KAMUS LOKAL
+        int i, j;
+
+        // ALGORITMA
+        double[][] copas = new double[matrix.length][matrix[0].length];
+        
+        for (i = 0; i < matrix.length; i++) {
+            for (j = 0; j < matrix[i].length;j++) {
+                copas[i][j] = matrix[i][j];
+            }
+        }
+
+        return copas;
+    }
+
     // Mencari hasil determinant dengan menggunakan cara cofactor
     public static double determinanKofaktor(double[][] matrix) {
         int n = matrix.length; //

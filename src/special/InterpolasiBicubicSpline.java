@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.util.*;
 
 import general.Fungsi;
-import general.InversMatrix;
+import general.dsdsds;
 
 public class InterpolasiBicubicSpline {
 
@@ -133,7 +133,7 @@ public class InterpolasiBicubicSpline {
 
         double[] Y = { matrix[1][1], matrix[1][2], matrix[2][1], matrix[2][2] };
 
-        X = InversMatrix.inverseGaussJordan(matrix);
+        X = dsdsds.inverseGaussJordan(matrix);
 
         coefficient = new double[4];
 
