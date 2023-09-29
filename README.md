@@ -11,11 +11,11 @@ awesome when someone starts to use it.
 
 ## Kelompok Ajarin Dong Puh Sepuh
 
-|   NIM    |          Nama          | Hobi |
-| :------: | :--------------------: | :--: |
-| 13522131 |  Owen Tobias Sinurat   |
-| 13522xxx |  Ahmad Thoriq Saputra  |
-| 13522xxx | Muhammad Fatihul Irhab |
+|   NIM    |          Nama          |         Hobi         |
+| :------: | :--------------------: | :------------------: |
+| 13522131 |  Owen Tobias Sinurat   |      Main Bola       |
+| 13522xxx |  Ahmad Thoriq Saputra  | Mimpi Bisa Main Bola |
+| 13522xxx | Muhammad Fatihul Irhab |   Ke Kamar Thoriq    |
 
 ## Instalasi
 
