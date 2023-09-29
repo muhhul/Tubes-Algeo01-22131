@@ -1,18 +1,19 @@
 package Special;
 
 public class SPL {
-    public static void splGauss(double[][] matriks) {
+    public static String splGauss(double[][] matriks) {
+        return "";
     }
 
-    public static void splGaussJ(double[][] matriks) {
-
+    public static String splGaussJ(double[][] matriks) {
+        return "";
     }
 
-    public static void splInvers(double[][] matriks) {
-
+    public static String splInvers(double[][] matriks) {
+        return "";
     }
 
-    public static void splCramer(double[][] matriks) {
-
+    public static String splCramer(double[][] matriks) {
+        return "";
     }
 }
