@@ -1,68 +1,10 @@
 package General;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Fungsi {
     public static Scanner input;
-    public static FileWriter fw;
-    public static String path = "";
-    public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-
-    // Fungsi mengubah matriks menjadi string sesuai dengan format print
-    public static String matriksKeString(double[][] M) {
-        String hasil = "";
-        for (int i = 0; i < M.length; i++) {
-            for (int j = 0; j < M[0].length; j++) {
-                hasil += M[i][j] + " ";
-            }
-            hasil += "\n";
-        }
-        return hasil;
-    }
-
-    public static void CreateFile() {
-        String dir;
-        String directory = System.getProperty("user.dir");
-        directory = directory.substring(directory.lastIndexOf("\\") + 1);
-        Date date = new Date();
-
-        if (directory.equals("bin")) {
-            dir = "..\\test\\result\\";
-        } else {
-            dir = "\\test\\result\\";
-        }
-        File file = new File(dir + dateFormat.format(date) + ".txt");
-
-        try {
-            file.createNewFile();
-            path = file.getAbsolutePath();
-        } catch (IOException e) {
-            System.out.println("Cannot create file");
-        }
-    }
-
-    // Fungsi untuk menambahkan string ke file
-    public static void tulisKeFile(String konten) {
-        try {
-            CreateFile();
-            Date date = new Date();
-            path = "test\\result\\" + dateFormat.format(date) + ".txt";
-            fw = new FileWriter(path);
-            fw.write("File dibuat pada: " + dateFormat.format(date) + "\n");
-            fw.write(konten);
-            fw.close();
-            System.out.println("Penulisan file berhasil!");
-        } catch (IOException e) {
-            System.out.println("Terjadi error dalam penulisan file!");
-        }
-    }
 
     // clear cmd
     public static void clearScreen() {
@@ -70,174 +12,127 @@ public class Fungsi {
         System.out.flush();
     }
 
+    // mencetak batas
+    public static void cetakBatas() {
+        System.out.println("==============================");
+    }
+
     // display menu options
     public static void menu() {
         clearScreen();
-        System.out.println("MENU");
+        cetakBatas();
+        System.out.println("             MENU             ");
+        cetakBatas();
         System.out.println("1. Sistem Persamaan Linear");
         System.out.println("2. Determinan");
         System.out.println("3. Matriks Balikan");
         System.out.println("4. Interpolasi Polinom");
         System.out.println("5. Interpolasi Bicubic Spline");
         System.out.println("6. Regresi Linear Berganda");
-        System.out.println("7. Keluar\n");
-        System.out.print("Pilihan:");
+        System.out.print("7. Keluar\n");
+        cetakBatas();
+        System.out.print("Pilihan: ");
     }
 
-    public static void metodeInput() {
-        clearScreen();
-        System.out.println("1. Keyboard");
-        System.out.println("2. File");
-        System.out.print("Pilihan:");
-    }
-
-    // Masukan matrix dari keyboard
-    public static double[][] inputFromUser() {
-        // KAMUS Lokal
-        int n, i, j;
-        Scanner masuk = null;
-        double[][] matrix = null;
-
-        // ALGORITMA
+    public static int metodeInput() {
+        int pilMetode = 0;
+        input = new Scanner(System.in);
         try {
-            // Masukin ukuran matriks
-            masuk = new Scanner(System.in);
-            System.out.print("Masukkan ukuran matriks square: ");
-            n = masuk.nextInt();
-
-            matrix = new double[n][n];
-            System.out.println();
-
-            // Masukin elemen pada matriks
-            System.out.println("Masukkan elemen-elemen matriks: ");
-            for (i = 0; i < n; i++)
-                for (j = 0; j < n; j++)
-                    matrix[i][j] = masuk.nextFloat();
-        } catch (Exception e) {
-        } finally {
-            masuk.close();
-        }
-        return matrix;
-    }
-
-    // Masukan matrix dari file (.txt)
-    public static double[][] inputFromTxt() {
-
-        // Kamus Lokal
-        String filePath, line;
-        int rows = 0, cols = 0;
-
-        // ALGORTIMA
-        Scanner path = new Scanner(System.in);
-        System.out.print("Path to txt file: "); // Masukan file path
-        filePath = path.nextLine();
-        path.close();
-        try {
-
-            // Memulai untuk mengukur matriks
-            FileReader fileReader = new FileReader(filePath);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            // Mengukur ukuran matriks pada txt file
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] elemen = line.split(" ");
-                cols = elemen.length;
-                rows++;
-            }
-
-            bufferedReader.close();
-            fileReader.close();
-
-            // Memulai untuk membaca elemen matriks
-            fileReader = new FileReader(filePath);
-            bufferedReader = new BufferedReader(fileReader);
-
-            double[][] matrix = new double[rows][cols];
-
-            // Membaca elemen pada matriks dan menyimpannya pada variabel matriks
-            int i = 0, j;
-            while ((line = bufferedReader.readLine()) != null && i < rows) {
-                String[] elemen = line.split(" ");
-                for (j = 0; j < cols; j++) {
-                    matrix[i][j] = Float.parseFloat(elemen[j]);
+            do {
+                clearScreen();
+                cetakBatas();
+                System.out.println("         Metode Input");
+                cetakBatas();
+                System.out.println("1. Keyboard");
+                System.out.println("2. File");
+                cetakBatas();
+                System.out.print("Pilihan: ");
+                pilMetode = input.nextInt();
+                if (pilMetode != 1 && pilMetode != 2) {
+                    System.out.println("Pilih 1 atau 2!");
+                    pause();
                 }
-
-                i++;
-            }
-
-            bufferedReader.close();
-            fileReader.close();
-            System.out.println("Matrix:");
-            displayMatrix(matrix);
-            return matrix;
-
+            } while (pilMetode != 1 && pilMetode != 2);
         } catch (Exception e) {
-            e.printStackTrace();
         }
-
-        return null;
-
+        return pilMetode;
     }
-    
-    // Salin matrix ke file (.txt)
-    public static void salinMatrixToTxt(double[][] matrix) {
-        //KAMUS LOKAL
-        int i, j;
 
-        //ALGORITMA
-        Scanner input = new Scanner(System.in);
-        System.out.print("File path yang ingin anda salin matrix: ");
-        String FilePath = input.nextLine();
+    public static int metodeOutput() {
+        int pilMetode = 0;
+        input = new Scanner(System.in);
         try {
-            FileWriter writer = new FileWriter(FilePath);
-            for (i = 0; i < matrix.length; i++) {
-                for (j = 0; j <matrix[i].length; j ++) {
-                    writer.write(matrix[i][j] + " ");
+            do {
+                clearScreen();
+                cetakBatas();
+                System.out.println("        Metode Output");
+                cetakBatas();
+                System.out.println("1. Keyboard");
+                System.out.println("2. File");
+                cetakBatas();
+                System.out.print("Pilihan: ");
+                pilMetode = input.nextInt();
+                if (pilMetode != 1 && pilMetode != 2) {
+                    System.out.println("Pilih 1 atau 2!");
+                    pause();
                 }
-                writer.write("\n");
-            }
-        
+            } while (pilMetode != 1 && pilMetode != 2);
         } catch (Exception e) {
-            e.printStackTrace();
         }
-        finally {
-            input.close();
+        return pilMetode;
+    }
+
+    public static void pause() {
+        Scanner scanner = null;
+        try {
+            System.out.println("Press Enter To Continue...");
+            scanner = new Scanner(System.in);
+            scanner.nextLine();
+        } catch (Exception e) {
         }
-        }
-    
+    }
+
+    // mencetak header 'output'
+    public static void cetakHeaderOutput() {
+        cetakBatas();
+        System.out.println("OUTPUT");
+        cetakBatas();
+    }
+
+    // mengembalikan string header 'output'
+    public static String headerOutput() {
+        return "==============================\n             OUTPUT             \n==============================\n\n";
+    }
+
     // Salin hasil ke file (.txt)
     public static void salinToTxt(double result) {
         Scanner input = new Scanner(System.in);
         System.out.print("File path yang ingin anda salin matrix: ");
         String FilePath = input.nextLine();
-
         try {
             FileWriter writer = new FileWriter(FilePath);
             writer.write(Double.toString(result));
             writer.close();
         }
-        
-         catch (Exception e) {
+        catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             input.close();
         }
-        
 
     }
-    
-    // Menulis matriks ke layar
-    public static void displayMatrix(double[][] matrix) {
-        if (matrix == null) {
-            System.out.println("Matrix kosong.");
-            return;
+
+    // mencari elemen dengan panjang terbesar dari sebuah matriks
+    static int maxLengthMatriks(double mat[][]) {
+        int max = 0;
+        for (int i = 0; i < mat.length; ++i) {
+            for (int j = 0; j < mat[0].length; ++j) {
+                if (String.valueOf(mat[i][j]).length() > max) {
+                    max = String.valueOf(mat[i][j]).length();
+                }
+            }
         }
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++)
-                System.out.print(matrix[i][j] + " ");
-            System.out.println();
-        }
+        return max;
     }
 
 }
