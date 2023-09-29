@@ -13,16 +13,38 @@ public class InversMatriks {
         // Membuat sebuah matrix identitas
         double[][] inverse = OperasiMatriks.CreateMatrixIdentitas(matrix);
         
-        // Menggunakan  Gauss-Jordan elimination
+        // Menggunakan Gauss-Jordan elimination
         for (int i = 0; i < n; i++) {
+            // Cari baris dengan elemen terbesar di kolom i sebagai pivot
+            int maxRow = i;
+            for (int j = i + 1; j < n; j++) {
+                if (Math.abs(matrix[j][i]) > Math.abs(matrix[maxRow][i])) {
+                    maxRow = j;
+                }
+            }
+            
+            // Tukar baris i dengan baris maxRow jika perlu
+            if (maxRow != i) {
+                // Tukar baris matrix
+                double[] temp = matrix[i];
+                matrix[i] = matrix[maxRow];
+                matrix[maxRow] = temp;
+                
+                // Tukar baris matriks identitas
+                temp = inverse[i];
+                inverse[i] = inverse[maxRow];
+                inverse[maxRow] = temp;
+            }
+            
             pengkalian = matrix[i][i];
             
             // Cek apakah matriks singular atau tidak
-            if (pengkalian == 0.0f) {
-                throw new ArithmeticException("Matrix tersebut singular, tidak bisa diinverse.");
+            if (pengkalian == 0.0) {
+                System.out.println("Matrix tersebut singular, tidak bisa diinverse.");
+                return null;
             }
             
-            // Mengalikan row dan elemen seterusnya
+            // Mengalikan baris dengan elemen seterusnya
             for (int j = 0; j < n; j++) {
                 matrix[i][j] /= pengkalian;
                 inverse[i][j] /= pengkalian;
@@ -45,23 +67,31 @@ public class InversMatriks {
     
     // Melakukan operasi inverse terhadap matrix dengan menggunakan metode Adjoint
     public static double[][] inverseAdjoint(double[][] matrix) {
-        // KAMUS LOKAL
         double determinant = OperasiMatriks.determinanKofaktor(matrix);
+    
+        if (Math.abs(determinant) < 1e-10) {
+            System.out.println("Matrix tersebut singular, tidak bisa diinverse.");
+            return null;
+        }
+    
         double pengkalian = 1 / determinant;
         double[][] Adjoin = OperasiMatriks.matrixAdjoin(matrix);
         double[][] inverse = new double[matrix.length][matrix.length];
         int i, j;
-
-        // ALGORITMA
-
-        // A^-1 = 1/det(matrix) x Adj(matrix)
+    
+        
         for (i = 0; i < matrix.length; i++) {
             for (j = 0; j < matrix[i].length; j++) {
-                inverse[i][j] = pengkalian * Adjoin[i][j];
+                // Membuat agar tidak terdapat negative zero (-0.0)
+                if (Math.abs(Adjoin[i][j]) < 1e-10) {
+                    inverse[i][j] = 0.0;
+                } else {
+                    inverse[i][j] = pengkalian * Adjoin[i][j];
+                }
             }
         }
+        
         return inverse;
-
     }
     
     // Print rumus inverse Gauss-Jordan
@@ -113,7 +143,7 @@ public class InversMatriks {
     }
     
     // sub menu inverse
-    public static void subMenuInverse() {
+    public static void main(String[] args) {
         // ALGORITMA
         double[][] matrix = null;
         double[][] inverse = null;
