@@ -54,18 +54,21 @@ public class OperasiMatriks {
     }
 
     // Mencari hasil determinant dengan menggunakan cara cofactor
-    public static double determinanKofaktor(double[][] matrix) {
-        int n = matrix.length; //
+    public static double determinanKofaktor(double[][] matriks) {
+
+        int n = matriks.length; //
         // Basis
         if (n == 1) {
-            return matrix[0][0];
+            return matriks[0][0];
+        } else if (matriks.length != matriks[0].length) {
+            return 0;
         }
 
         double det = 0.0;
         int sign = 1;
 
         for (int j = 0; j < n; j++) {
-            if (matrix[0][j] != 0) {
+            if (matriks[0][j] != 0) {
                 double[][] subMatrix = new double[n - 1][n - 1];
                 int sub_i = 0;
                 for (int i = 1; i < n; i++) {
@@ -73,14 +76,14 @@ public class OperasiMatriks {
                     for (int k = 0; k < n; k++) {
                         if (k != j) {
                             // Membuat subMatrix
-                            subMatrix[sub_i][sub_j] = matrix[i][k];
+                            subMatrix[sub_i][sub_j] = matriks[i][k];
                             sub_j++;
                         }
                     }
                     sub_i++;
                 }
                 // Rekursif untuk mendapatkan nilai determinant jika belum n = 1
-                det += (sign * matrix[0][j] * determinanKofaktor(subMatrix));
+                det += (sign * matriks[0][j] * determinanKofaktor(subMatrix));
             }
             // Mengubah tanda
             sign = -sign;
@@ -89,21 +92,56 @@ public class OperasiMatriks {
         return det;
     }
 
-    public static double[][] determinanReduksi(double[][] matriks) {
-        return matriks;
+    public static double determinanReduksi(double[][] matriks) {
+        if (matriks.length != matriks[0].length) {
+            return 0;
+        }
+        int i, j, k, x;
+        double[] temp;
+        double m, n, p, det, sum;
+        det = 1;
+        sum = 1;
+        for (i = 0; i < matriks.length; i++) {
+            x = i;
+            while (x < matriks.length && matriks[x][i] == 0) {
+                x++;
+            }
+            if (x == matriks.length) {
+                return 0;
+            } else if (x != i) {
+                temp = matriks[i];
+                matriks[i] = matriks[x];
+                matriks[x] = temp;
+                det *= -1;
+            }
+
+            for (j = i + 1; j < matriks.length; j++) {
+                m = matriks[i][i];
+                n = matriks[j][i];
+                for (k = 0; k < matriks.length; k++) {
+                    p = (m * matriks[j][k]) - (n * matriks[i][k]);
+                    matriks[j][k] = p;
+                }
+                sum *= m;
+            }
+        }
+        for (i = 0; i < matriks.length; i++) {
+            det *= matriks[i][i];
+        }
+        return det / sum;
     }
 
     public static double[][] multiplyMatrix(double[][] m1, double[][] m2) {
         int rows1 = m1.length;
         int cols1 = m1[0].length;
         int cols2 = m2[0].length;
-        
+
         if (cols1 != m2.length) {
             throw new IllegalArgumentException("Matrix dimensions are not compatible for multiplication.");
         }
-        
+
         double[][] hasil = new double[rows1][cols2];
-        
+
         for (int i = 0; i < rows1; i++) {
             for (int j = 0; j < cols2; j++) {
                 double sum = 0.0;
@@ -113,10 +151,10 @@ public class OperasiMatriks {
                 hasil[i][j] = sum;
             }
         }
-        
+
         return hasil;
     }
-    
+
     public static double[][] matrixCofactor(double[][] matrix) {
         int n = matrix.length;
         double[][] cofactor = new double[n][n]; // Membuat matrix baru berupa cofactor
@@ -158,6 +196,5 @@ public class OperasiMatriks {
 
         return adjoint;
     }
-
 
 }
