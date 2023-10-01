@@ -34,13 +34,13 @@ public class Main {
                     pilMetode = Fungsi.metodeInput();
                     switch (pilSub) {
                         case 1:
-                            luaran = luaran.concat(SPL.splGauss(matriks));
+                            luaran = luaran.concat(Konversi.splKeString(SPL.splGauss(matriks)));
                         case 2:
-                            luaran = luaran.concat(SPL.splGaussJ(matriks));
+                            luaran = luaran.concat(Konversi.splKeString(SPL.splGaussJ(matriks)));
                         case 3:
-                            luaran = luaran.concat(SPL.splInvers(matriks));
+                            luaran = luaran.concat(Konversi.splKeString(SPL.splInvers(matriks)));
                         case 4:
-                            luaran = luaran.concat(SPL.splCramer(matriks));
+                            luaran = luaran.concat(Konversi.splKeString(SPL.splCramer(matriks)));
                         default:
                             System.out.println("Pilih 1, 2, 3, atau 4!");
                     }
@@ -74,16 +74,18 @@ public class Main {
                     }
                     switch (pilSub) {
                         case 1:
-                            if (OperasiMatriks.determinanKofaktor(matriks) == 0) {
+                            if (OperasiMatriks.determinanKofaktor(matriks) == null) {
                                 luaran = luaran.concat("Matriks tidak memiliki determinan.");
                             } else {
+                                luaran = luaran.concat("Determinan matriks = ");
                                 luaran = luaran.concat(String.valueOf(OperasiMatriks.determinanKofaktor(matriks)));
                             }
                             break;
                         case 2:
-                            if (OperasiMatriks.determinanReduksi(matriks) == 0) {
+                            if (OperasiMatriks.determinanReduksi(matriks) == null) {
                                 luaran = luaran.concat("Matriks tidak memiliki determinan.");
                             } else {
+                                luaran = luaran.concat("Determinan matriks = ");
                                 luaran = luaran.concat(String.valueOf(OperasiMatriks.determinanReduksi(matriks)));
                             }
                             break;
@@ -126,7 +128,6 @@ public class Main {
                             } else {
                                 luaran = luaran
                                         .concat(Konversi.matriksKeString(InversMatriks.inverseGaussJordan(matriks)));
-
                             }
                             break;
                         case 2:
@@ -161,6 +162,13 @@ public class Main {
                             matriks = Input.inputMatriksFile();
                         default:
                             System.out.println("Input salah!");
+                    }
+                    luaran = luaran.concat(Konversi.interpolasiKeString(Interpolasi.InterpolasiPolinom(matriks, n)));
+                    pilMetode = Fungsi.metodeOutput();
+                    if (pilMetode == 1) {
+                        Output.cetakLuaran(luaran);
+                    } else {
+                        Output.tulisKeFile(luaran);
                     }
                     break;
                 case 5:
