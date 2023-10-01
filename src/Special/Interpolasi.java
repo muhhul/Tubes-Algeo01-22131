@@ -198,27 +198,51 @@ public class Interpolasi {
 
     public static void fungsiBicubic(double[][] matrix, double a, double b) {
         // KAMUS LOKAL
-        int i, j, k = 0, Bi, Bj, x, y;
+        int i, j, k = 0, Bi, Bj, x, y, p;
         double hasil = 0.0;
 
         // ALGORITMA
         double[][] Mbicubic = new double[16][16];
         double[][] Y = new double[16][1];
-
+        
         // Konstruksi matrix bicubic interpolation
         Bi = 0;
-        for (x = -1; x < 3; x++) {
-            for (y = -1; y < 3; y++) {
-                Bj = 0;
-                for (i = 0; i < 4; i++) {
-                    for (j = 0; j < 4; j++) {
-                        Mbicubic[Bi][Bj] = Math.pow(x, i) * Math.pow(y, j);
-                        Bj++;
+        // Konstruksi matrix bicubic interpolation
+        Bi = 0;
+        for (p = 0; p < 4; p++) {
+            for (y = 0; y < 2; y++){
+                for (x = 0; x < 2; x++) {
+                    Bj = 0;
+                    for( i = 0; i < 4; i++) {
+                        for (j = 0; j < 4; j++) {
+                            int ki, kj, Q;
+                            if (p == 1) { // jika p = 1  maka gunakan rumus i x X^(i-1) x Y^j dengan i = [1..3] j = [0..3]
+                                ki = (j == 0) ? -1 : j - 1;
+                                kj = i;
+                                Q = (j == 0) ? 0 : j;
+                            } else if (p == 2) { // jika p = 2 maka gunakan rumus j x X^i x Y^(j-1) dengan i = [0..3] j = [1..3]
+                                ki = j;
+                                kj = (i == 0) ? -1 : i - 1;
+                                Q = (i == 0) ? 0 : i;
+                            } else if (p == 3) { // jika p = 3 maka gunakan rumus ixj X^(i-1) x Y^(j-1) dengan i = [0..3] j = [0..3]
+                                ki = j - 1;
+                                kj = i - 1;
+                                Q = i * j;
+                            } else { // jika p = 0 maka gunakan rumus X^i x Y^j dengan i = [0..3] j = [0..3]
+                                ki = j;
+                                kj = i;
+                                Q = 1;
+                            }
+                            
+                            Mbicubic[Bi][Bj] = (ki >= 0 && kj >= 0) ? Q * Math.pow(x, ki) * Math.pow(y, kj) : 0;
+                                                        
+                            Bj++;   
+                        }
                     }
+                    Bi++;
                 }
-                Bi++;
             }
-        }
+            }
 
         // Inverse matrix Bicubic
         double[][] MbicubicInverse = InversMatriks.inverseGaussJordan(Mbicubic);
@@ -246,6 +270,7 @@ public class Interpolasi {
         System.out.printf("Hasil dari fungsi bicubic f(%.2f,%.2f) = %.2f\n", a, b, hasil);
     }
 
+    // Sub-menu Bicubic
     public static void main(String[] args) {
         // KAMUS
         double[][] matrix;
@@ -260,10 +285,10 @@ public class Interpolasi {
             System.out.println("Input matrix via:\n1. File (.txt)\n2. User");
             System.out.print("Via = ");
             String via = input.nextLine();
-            if (via.equals("1")) {
+            if (via.equals("2")) {
                 getMatrix = inputFromUser();
                 break;
-            } else if (via.equals("2")) {
+            } else if (via.equals("1")) {
                 getMatrix = inputFromTxt();
                 if (getMatrix != null) {
                     break;
