@@ -123,6 +123,8 @@ public class Interpolasi {
     }
 
     public static double[] InterpolasiPolinom(double[][] matrix, double nilai) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
         for(int i = 0; i < rows; i++){
             int maxRow = i;
             for(int k = i + 1; k < rows; k++){
