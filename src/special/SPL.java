@@ -41,6 +41,167 @@ public class SPL {
     }
 
     public static String[] splGaussJ(double[][] matriks) {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.print("Masukkan jumlah baris matriks: ");
+        int rows = keyboard.nextInt();
+        System.out.print("Masukkan jumlah kolom matriks: ");
+        int cols = keyboard.nextInt();
+
+        double[][] matrix = new double[rows][cols];
+        System.out.println("Masukkan elemen-elemen matriks:");
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                matrix[i][j] = keyboard.nextDouble();
+            }
+        }
+
+        
+        System.out.println("Matriks yang diinputkan:");
+        for(int a = 0; a < rows; a++){
+            for(int j = 0; j < cols; j++){
+                System.out.print(matrix[a][j] + "\t");
+            }
+            System.out.println();
+        }
+        int n = matrix.length;
+        double pengkalian;
+        for(int r = 0; r < rows; r++){
+            int maxRow = r;
+            for(int k = r + 1; k < rows; k++){
+                if(Math.abs(matrix[k][r]) > Math.abs(matrix[maxRow][r])){
+                    maxRow = k;
+                }
+            }
+            double[] temp = matrix[r];
+            matrix[r] = matrix[maxRow];
+            matrix[maxRow] = temp;
+        }
+        for (int i = 0; i < n; i++) {
+            pengkalian = matrix[i][i];
+            for (int j = 0; j < cols; j++) {
+                if(matrix[i][i]!=0.0f){
+                    matrix[i][j] /= pengkalian;
+                }
+            }
+            for (int k = 0; k < n; k++) {
+                if (k != i) {
+                    pengkalian = matrix[k][i];
+                    for (int j = 0; j < cols; j++) {
+                        matrix[k][j] -= pengkalian * matrix[i][j];
+                    }
+                }
+            }
+        }
+        for(int r = 0; r < rows; r++){
+            for(int k = 0; k < rows; k++){
+                int count1=0;
+                int count2=0;
+                for(int i = 0; i < cols; i++){
+                    if(matrix[r][i]!=0){
+                        break;
+                    }count1++;
+                }for(int i = 0; i < cols; i++){
+                    if(matrix[k][i]!=0){
+                        break;
+                    }count2++;
+                }if(count2>count1){
+                    double[] temp = matrix[r];
+                    matrix[r] = matrix[k];
+                    matrix[k] = temp;
+                }
+            }
+        }
+        int trivial = 0;
+        for(int i = 0;i<rows;i++){
+            if(matrix[i][cols-1]!=0){
+                trivial = 1;
+            }
+        }
+
+        if(matrix[rows-1][cols-2] == 0 && matrix[rows-1][cols-1]!=0){
+            System.out.println("spl tidak memiliki solusi");
+        }else if(((matrix[rows-1][cols-2] == 0 && matrix[rows-1][cols-1]==0) || rows!=cols-1)&&trivial==1){
+            String[][] temppp = new String[cols-1][3];
+            for(int i = 0; i < cols-1; i++){
+                int huruf = 97+i;
+                char temp = (char) huruf;
+                temppp[i][0]=""+temp;
+                temppp[i][1]="1";
+            }
+            for(int i = 0; i < rows; i++){
+                for(int j = 0; j < cols-1; j++){
+                    if(matrix[i][j]!=0){
+                        temppp[j][0]="";
+                        temppp[j][1]="0";
+                        temppp[j][2]=Double.toString(matrix[i][j]);
+                        break;
+                    }
+                }
+            }
+            System.out.println("Matriks yang diinputkan:");
+            for(int a = 0; a < rows; a++){
+                for(int j = 0; j < cols; j++){
+                    System.out.print(matrix[a][j] + "\t");
+                }
+                System.out.println();
+            }
+            for(int j = 0; j < cols-1; j++){
+                    System.out.println(temppp[j][1]);
+            }
+            int count = cols-2;
+            for(int i = rows-1; i >= 0; i--){
+                double nilsem = 0;
+                if(temppp[count][1]=="0"){
+                    nilsem = (matrix[i][cols-1]/(Double.valueOf(temppp[count][2])));
+                    for(int j = 0; j < cols-1; j++){
+                        if(j!=count){
+                            if(matrix[i][j]!=0){
+                                matrix[i][j] = matrix[i][j] * (-1);
+                                if(temppp[j][1]=="0"){
+                                    if((matrix[i][j]/(Double.valueOf(temppp[count][2])))*Double.valueOf(temppp[j][0])>0){
+                                        nilsem=nilsem+((matrix[i][j]/(Double.valueOf(temppp[count][2])))*Double.valueOf(temppp[j][0]));
+                                    }else{
+                                        nilsem=nilsem+((matrix[i][j]/(Double.valueOf(temppp[count][2])))*Double.valueOf(temppp[j][0]));
+                                    }
+                                }else{
+                                    temppp[count][1] = "1";
+                                    if(matrix[i][j]>0&&temppp[count][0]!=""){
+                                        temppp[count][0] = temppp[count][0] + " + ";
+                                    }
+                                    temppp[count][0] = temppp[count][0] + Double.toString(matrix[i][j]/(Double.valueOf(temppp[count][2]))) + temppp[j][0];
+                                }
+                            }
+                        }
+                    }
+                    if(temppp[count][0]==""&&nilsem==0){
+                        count++;
+                    }
+                    if(nilsem<0){
+                        temppp[count][0] = ""+temppp[count][0] + Double.toString(nilsem); 
+                    }else if(nilsem!=0 || (nilsem==0&&temppp[count][0]=="")){
+                        temppp[count][0] = ""+Double.toString(nilsem) + temppp[count][0];
+                    }
+                    System.out.println(temppp[count][0]);
+                    count--;
+                }else{
+                    count--;
+                    i++;
+                }
+            }
+            for(int i = 0; i < cols-1; i++){
+                System.out.println("x[" + i + "] = " + temppp[i][0]);
+            }
+        }else{
+            for(int i = 0; i < cols-1; i++){
+                System.out.println("x[" + i + "] = " + matrix[i][cols-1]);
+            }
+        }System.out.println("Matriks yang diinputkan:");
+        for(int a = 0; a < rows; a++){
+            for(int j = 0; j < cols; j++){
+                System.out.print(matrix[a][j] + "\t");
+            }
+            System.out.println();
+        }
         return null;
     }
 
