@@ -48,12 +48,12 @@ public class SPL {
         return null;
     }
 
-    public static String[] splCramer(double[][] matrikx) {
+    public static String[] splCramer(double[][] matrix) {
         Scanner keyboard = new Scanner(System.in);
         System.out.print("Masukkan jumlah baris matriks: ");
-        int rows = keyboard.nextInt();
+        int rows = matrix.length;
         System.out.print("Masukkan jumlah kolom matriks: ");
-        int cols = keyboard.nextInt();
+        int cols = matrix[0].length;
 
         double[][] matrix = new double[rows][cols];
         System.out.println("Masukkan elemen-elemen matriks:");
