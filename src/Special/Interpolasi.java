@@ -122,8 +122,73 @@ public class Interpolasi {
 
     }
 
-    public static double[] InterpolasiPolinom(double[][] titik, double x) {
-        return null;
+    public static double[] InterpolasiPolinom(double[][] matrix, double nilai) {
+        for(int i = 0; i < rows; i++){
+            int maxRow = i;
+            for(int k = i + 1; k < rows; k++){
+                if(Math.abs(matrix[k][i]) > Math.abs(matrix[maxRow][i])){
+                    maxRow = k;
+                }
+            }
+
+            double[] temp = matrix[i];
+            matrix[i] = matrix[maxRow];
+            matrix[maxRow] = temp;
+        }
+
+        for(int i = cols-1; i >= 0; i--){
+            matrix[0][i] =  matrix[0][i]/matrix[0][0];
+        }
+        int x=1,y=1;
+        for(int i = 1; i < rows; i++){
+            int tempp=0;
+            for(int l = 0; l < x; l++){
+                if(matrix[i][l] != 0){
+                    double temp = matrix[i][l]/matrix[l][l];
+                    for(int j = l; j<cols;j++){
+                        if(Math.abs(matrix[i][j] - (matrix[l][j]*temp)) <= 0.00000000001){
+                            matrix[i][j]=0;
+                        }else{
+                            matrix[i][j] = matrix[i][j] - (matrix[l][j]*temp);
+                        }
+                    }
+                }else{
+                    tempp++;
+                }
+            }
+            if(matrix[i][x] != 0){
+                for(int k = cols-1; k >= x; k--){
+                    matrix[i][k] =  matrix[i][k]/matrix[i][x];
+                }
+            }
+            if(matrix[i][x]!=1 && x!=cols-1){
+                i--;
+                if(x==cols-1){
+                    x=i;
+                }else{
+                    y++;
+                    x++;
+                }
+            }else{
+                y++;
+                x=i+1;
+            }
+        }
+ 
+        double[] solution = new double[cols-1];
+        for(int i = rows - 1; i >= 0; i--){
+            double sum = 0.0;
+            for(int j = i + 1; j < cols-1; j++){
+                sum = sum + (matrix[i][j] * solution[j]);
+            }
+            solution[i] = (matrix[i][cols-1] - sum) / matrix[i][i];
+        }
+
+        double hasil =0 ;
+        for(int i = 0; i < rows; i++){
+            hasil = hasil + (Math.pow(nilai, i)*solution[i]);
+        }
+        return hasil;
     }
 
     public static void fungsiBicubic(double[][] matrix, double a, double b) {
