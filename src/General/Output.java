@@ -47,7 +47,7 @@ public class Output {
      */
 
     // membuat file dengan nama waktu pembuatan file
-    public static Date CreateFile() {
+    public static Date buatFile() {
         String temp;
         String directory = System.getProperty("user.dir");
         directory = directory.substring(directory.lastIndexOf("\\") + 1);
@@ -71,7 +71,7 @@ public class Output {
     // Fungsi untuk menambahkan string ke file
     public static void tulisKeFile(String konten) {
         try {
-            Date date = CreateFile();
+            Date date = buatFile();
             path = dir + dateFormat.format(date) + ".txt";
             WR = new FileWriter(path);
             WR.write("File dibuat pada: " + dateFormat.format(date) + "\n");
