@@ -185,10 +185,13 @@ public class Interpolasi {
         }
 
         double hasil =0 ;
+        double[] keluaran = new double[rows];
         for(int i = 0; i < rows; i++){
+            keluaran[i] = solution[i];
             hasil = hasil + (Math.pow(nilai, i)*solution[i]);
         }
-        return hasil;
+        keluaran[rows] = hasil;
+        return keluaran;
     }
 
     public static void fungsiBicubic(double[][] matrix, double a, double b) {
