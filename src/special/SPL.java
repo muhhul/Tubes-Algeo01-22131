@@ -45,11 +45,58 @@ public class SPL {
     }
 
     public static String[] splInvers(double[][] matriks) {
-        return null;
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        double[][] matrix = new double[rows][cols];
+
+        int n = matrix.length;
+        double pengkalian;
+        double[][] inverse = new double[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++)
+        for (int j = 0; j < matrix[i].length; j++) {
+            if (i == j) {
+                inverse[i][j] = 1;
+            } else {
+                inverse[i][j] = 0;
+            }
+        }
+        String keluaran[] = new String[rows];
+        String keluaran2[] = new String[1];
+        for (int i = 0; i < n; i++) {
+            pengkalian = matrix[i][i];
+            if (pengkalian == 0.0f) {
+                keluaran2[0] = "Matrix tersebut singular, tidak bisa diinverse. Silahkan gunakan metode lain";
+                return keluaran2;
+            }
+
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] /= pengkalian;
+                inverse[i][j] /= pengkalian;
+            }
+
+            for (int k = 0; k < n; k++) {
+                if (k != i) {
+                    pengkalian = matrix[k][i];
+                    for (int j = 0; j < n; j++) {
+                        matrix[k][j] -= pengkalian * matrix[i][j];
+                        inverse[k][j] -= pengkalian * inverse[i][j];
+                    }
+                }
+            }
+        }
+
+        for(int i = 0; i < rows; i++){
+            double temp = 0;
+            for(int j = 0; j < n; j++){
+                temp = temp + (inverse[i][j]*matrix[j][cols-1]);
+            }
+            keluaran[i] = temp;
+        }
+        return keluaran;
     }
 
     public static String[] splCramer(double[][] matrix) {
-        Scanner keyboard = new Scanner(System.in);
         int rows = matrix.length;
         int cols = matrix[0].length;
         
@@ -61,7 +108,7 @@ public class SPL {
                 temp[i][j] = matrix[i][j];
             }
         }
-        String keluaran[] = new String[cols-2];
+        String keluaran[] = new String[cols-1];
         String keluaran2[] = new String[1];
         for(int i = 0; i < cols-1; i++){
             if(determinanKofaktor(newMatrix) == 0.0f){
