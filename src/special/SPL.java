@@ -50,18 +50,8 @@ public class SPL {
 
     public static String[] splCramer(double[][] matrix) {
         Scanner keyboard = new Scanner(System.in);
-        System.out.print("Masukkan jumlah baris matriks: ");
         int rows = matrix.length;
-        System.out.print("Masukkan jumlah kolom matriks: ");
         int cols = matrix[0].length;
-
-        double[][] matrix = new double[rows][cols];
-        System.out.println("Masukkan elemen-elemen matriks:");
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
-                matrix[i][j] = keyboard.nextDouble();
-            }
-        }
         
         double[][] newMatrix = new double[rows][cols-1];
         double[][] temp = new double[rows][cols-1];
@@ -71,12 +61,12 @@ public class SPL {
                 temp[i][j] = matrix[i][j];
             }
         }
-
-        System.out.println("Matriks yang diinputkan:");
-        
+        String keluaran[] = new String[cols-2];
+        String keluaran2[] = new String[1];
         for(int i = 0; i < cols-1; i++){
             if(determinanKofaktor(newMatrix) == 0.0f){
-                throw new ArithmeticException("Determinan matriks nol, tidak ada solusi unik.");
+                keluaran2[0] = "Determinan matriks nol, tidak ada solusi unik. Silahkan gunakan metode lain";
+                return keluaran2;
             }
             double detM1 = determinanKofaktor(newMatrix);
             for(int j = 0; j < rows; j++){
@@ -86,9 +76,8 @@ public class SPL {
             for(int j = 0; j < rows; j++){
                 temp[j][i] = matrix[j][i];
             } 
-
-            System.out.println("x[" + i + "] = " + (detM2/detM1));
+            keluaran[i] = (detM2/detM1);
         }
-        return null;
+        return keluaran;
     }
 }
