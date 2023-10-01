@@ -1,4 +1,5 @@
 package General;
+import java.util.Scanner;
 
 public class OperasiMatriks {
 
@@ -196,5 +197,46 @@ public class OperasiMatriks {
 
         return adjoint;
     }
+    
+    // Menghasilkan matriks Hilbert
+    public static void matrixHilbert() {
+        // KAMUS LOKAL
+        int i, j;
+        Scanner S;
+
+        // ALGORITMA
+        S = new Scanner(System.in);
+        System.out.print("Masukkin nilai N = ");
+        int N = S.nextInt();
+        double[][] Hilbert = new double[N][N];
+        double[][] B = new double[N][1];
+
+        // Initialize Hilbert matrix
+        for (i = 0; i < N; i++) {
+            for (j = 0; j < N; j++) {
+                Hilbert[i][j] = 1.0 / (i + j + 1);
+            }
+        }
+
+        // Initialize B matrix
+        for (i = 0; i < N; i++) {
+            if (i == 0) {
+                B[i][0] = 1.0; 
+            } else {
+                B[i][0] = 0.0; 
+            }
+        }
+
+        // Display Matrix Hilbert and B berseblahan
+        for (i = 0; i < N; i++) {
+            for (j = 0; j < N; j++) {
+                System.out.printf("%.4f ", Hilbert[i][j]);
+            }
+            System.out.print(" | "); 
+            System.out.printf("%.4f ", B[i][0]);
+            System.out.println(); 
+        }
+    }
+
 
 }
