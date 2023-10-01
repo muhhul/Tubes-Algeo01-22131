@@ -1,4 +1,5 @@
 
+import java.util.Map;
 import java.util.Scanner;
 
 import General.*;
@@ -9,9 +10,12 @@ public class Main {
 
     public static void main(String[] args) {
         int pilMenu = 0, pilSub = 0, pilMetode = 0, m = 0, n = 0;
+        double a, b, x;
         boolean operation = true;
         double[][] matriks = null;
         String luaran;
+        Map<String, Object> argument;
+
         while (operation) {
             luaran = Fungsi.headerOutput();
             input = new Scanner(System.in);
@@ -22,7 +26,7 @@ public class Main {
                     input = new Scanner(System.in);
                     Fungsi.clearScreen();
                     Fungsi.cetakBatas();
-                    System.out.println("Metode");
+                    System.out.println("            Metode");
                     Fungsi.cetakBatas();
                     System.out.println("1. Metode Eliminasi Gauss");
                     System.out.println("2. Metode Eliminasi Gauss-Jordan");
@@ -32,15 +36,28 @@ public class Main {
                     System.out.print("Pilihan: ");
                     pilSub = input.nextInt();
                     pilMetode = Fungsi.metodeInput();
+                    if (pilMetode == 1) {
+                        System.out.print("Jumlah baris matriks: ");
+                        n = input.nextInt();
+                        System.out.print("Jumlah baris kolom: ");
+                        m = input.nextInt();
+                        matriks = Input.inputMatriksKeyboard(n, m);
+                    } else {
+                        matriks = Input.inputMatriksFile();
+                    }
                     switch (pilSub) {
                         case 1:
                             luaran = luaran.concat(Konversi.splKeString(SPL.splGauss(matriks)));
+                            break;
                         case 2:
                             luaran = luaran.concat(Konversi.splKeString(SPL.splGaussJ(matriks)));
+                            break;
                         case 3:
                             luaran = luaran.concat(Konversi.splKeString(SPL.splInvers(matriks)));
+                            break;
                         case 4:
                             luaran = luaran.concat(Konversi.splKeString(SPL.splCramer(matriks)));
+                            break;
                         default:
                             System.out.println("Pilih 1, 2, 3, atau 4!");
                     }
@@ -56,7 +73,7 @@ public class Main {
                         input = new Scanner(System.in);
                         Fungsi.clearScreen();
                         Fungsi.cetakBatas();
-                        System.out.println("Metode");
+                        System.out.println("            Metode");
                         Fungsi.cetakBatas();
                         System.out.println("1. Metode Ekspansi Kofaktor");
                         System.out.println("2. Metode Reduksi Baris");
@@ -105,7 +122,7 @@ public class Main {
                         input = new Scanner(System.in);
                         Fungsi.clearScreen();
                         Fungsi.cetakBatas();
-                        System.out.println("Metode");
+                        System.out.println("            Metode");
                         Fungsi.cetakBatas();
                         System.out.println("1. Metode Balikan");
                         System.out.println("2. Metode Adjoin");
@@ -151,19 +168,24 @@ public class Main {
                     }
                     break;
                 case 4:
+                    x = 0;
                     Fungsi.metodeInput();
                     pilMetode = input.nextInt();
                     switch (pilMetode) {
                         case 1:
-                            System.out.print("Jumlah baris & kolom: ");
+                            System.out.print("Jumlah titik: ");
                             n = input.nextInt();
-                            matriks = Input.inputMatriksKeyboard(n, n);
+                            System.out.print("Nilai x yang akan ditaksir: ");
+                            n = input.nextInt();
+                            matriks = Input.inputMatriksKeyboard(n, 2);
                         case 2:
-                            matriks = Input.inputMatriksFile();
+                            argument = Input.inputPolinomFile();
+                            matriks = (double[][]) argument.get("matriks");
+                            x = (double) argument.get("x");
                         default:
                             System.out.println("Input salah!");
                     }
-                    luaran = luaran.concat(Konversi.interpolasiKeString(Interpolasi.InterpolasiPolinom(matriks, n)));
+                    luaran = luaran.concat(Konversi.polinomKeString(Interpolasi.InterpolasiPolinom(matriks, x)));
                     pilMetode = Fungsi.metodeOutput();
                     if (pilMetode == 1) {
                         Output.cetakLuaran(luaran);
@@ -172,34 +194,72 @@ public class Main {
                     }
                     break;
                 case 5:
+                    a = 0;
+                    b = 0;
                     Fungsi.metodeInput();
                     pilMetode = input.nextInt();
                     switch (pilMetode) {
                         case 1:
-                            System.out.print("Jumlah baris & kolom: ");
-                            n = input.nextInt();
-                            matriks = Input.inputMatriksKeyboard(n, n);
+                            matriks = Input.inputMatriksKeyboard(4, 4);
+                            do {
+                                Fungsi.clearScreen();
+                                System.out.println("Masukkan nilai a dan b.");
+                                System.out.print("Nilai a = ");
+                                a = input.nextDouble();
+                                System.out.print("Nilai b = ");
+                                b = input.nextDouble();
+                                if (a < 0 || a > 1 || b < 0 || b > 1) {
+                                    System.out.println("Nilai a dan b harus dalam rentang [0..1]");
+                                }
+                            } while (a < 0 || a > 1 || b < 0 || b > 1);
                         case 2:
-                            matriks = Input.inputMatriksFile();
+                            argument = Input.inputBicubicFile();
+                            matriks = (double[][]) argument.get("matrix");
+                            a = (double) argument.get("a");
+                            b = (double) argument.get("b");
                         default:
                             System.out.println("Input salah!");
+                    }
+                    luaran = luaran.concat(Konversi.bicubicKeString(Interpolasi.interpolasiBicubic(matriks, a, b)));
+                    pilMetode = Fungsi.metodeOutput();
+                    if (pilMetode == 1) {
+                        Output.cetakLuaran(luaran);
+                    } else {
+                        Output.tulisKeFile(luaran);
                     }
                     break;
                 case 6:
+                    x = 0;
                     Fungsi.metodeInput();
                     pilMetode = input.nextInt();
                     switch (pilMetode) {
                         case 1:
-                            System.out.print("Jumlah baris & kolom: ");
+                            System.out.print("Jumlah peubah x: ");
                             n = input.nextInt();
-                            matriks = Input.inputMatriksKeyboard(n, n);
+                            System.out.print("Jumlah sampel: ");
+                            m = input.nextInt();
+                            System.out.print("Nilai x yang akan ditaksir:  ");
+                            x = input.nextInt();
+                            matriks = Input.inputMatriksKeyboard(m, n + 1);
                         case 2:
-                            matriks = Input.inputMatriksFile();
+                            argument = Input.inputBicubicFile();
+                            matriks = (double[][]) argument.get("matriks");
+                            x = (double) argument.get("x");
                         default:
                             System.out.println("Input salah!");
                     }
+                    luaran = luaran.concat(Konversi.regresiKeString(RegresiLinearBerganda.regresiLinear(matriks, x)));
+                    pilMetode = Fungsi.metodeOutput();
+                    if (pilMetode == 1) {
+                        Output.cetakLuaran(luaran);
+                    } else {
+                        Output.tulisKeFile(luaran);
+                    }
                     break;
                 case 7:
+                    Fungsi.clearScreen();
+                    System.out.println("Selamat Jalan >.<");
+                    Fungsi.pause();
                     operation = false;
                     break;
                 default:
