@@ -67,7 +67,7 @@ public class Fungsi {
                 cetakBatas();
                 System.out.println("        Metode Output");
                 cetakBatas();
-                System.out.println("1. Keyboard");
+                System.out.println("1. Terminal");
                 System.out.println("2. File");
                 cetakBatas();
                 System.out.print("Pilihan: ");
@@ -113,8 +113,7 @@ public class Fungsi {
             FileWriter writer = new FileWriter(FilePath);
             writer.write(Double.toString(result));
             writer.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             input.close();
