@@ -2,10 +2,13 @@ package General;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Input {
     public static Scanner input;
+    public static String dir = "..\\test\\case\\";
 
     public static double[][] inputMatriksKeyboard(int row, int col) {
         // KAMUS Lokal
@@ -29,18 +32,16 @@ public class Input {
 
     // Masukan matrix dari file txt
     public static double[][] inputMatriksFile() {
-
         // Kamus Lokal
-        String filePath, line;
+        String namaFile, filePath, line;
         int rows = 0, cols = 0;
 
         // ALGORTIMA
-        Scanner path = new Scanner(System.in);
-        System.out.print("Path to txt file: "); // Masukan file path
-        filePath = path.nextLine();
-        path.close();
+        input = new Scanner(System.in);
+        System.out.print("Nama file: "); // Masukan file path
+        namaFile = input.nextLine();
+        filePath = dir + namaFile + ".txt";
         try {
-
             // Memulai untuk mengukur matriks
             FileReader fileReader = new FileReader(filePath);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -79,9 +80,119 @@ public class Input {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return null;
+    }
 
+    public static Map<String, Object> inputPolinomFile() {
+        // Kamus Lokal
+        double x;
+        String namaFile, filePath, line;
+        int rows = 0;
+
+        // ALGORTIMA
+        input = new Scanner(System.in);
+        System.out.print("Nama file: "); // Masukan file path
+        namaFile = input.nextLine();
+        filePath = dir + namaFile + ".txt";
+        try {
+            // Memulai untuk mengukur matriks
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            // Mengukur ukuran matriks pada txt file
+            while ((line = bufferedReader.readLine()) != null) {
+                rows++;
+            }
+
+            bufferedReader.close();
+            fileReader.close();
+
+            // Memulai untuk membaca elemen matriks
+            fileReader = new FileReader(filePath);
+            bufferedReader = new BufferedReader(fileReader);
+
+            double[][] matriks = new double[rows - 1][2];
+
+            // Membaca elemen pada matriks dan menyimpannya pada variabel matriks
+            int i = 0, j;
+            while ((line = bufferedReader.readLine()) != null && i < rows - 1) {
+                String[] elemen = line.split(" ");
+                for (j = 0; j < 2; j++) {
+                    matriks[i][j] = Float.parseFloat(elemen[j]);
+                }
+
+                i++;
+            }
+            String[] elemen = line.split(" ");
+
+            x = Double.parseDouble(elemen[0]);
+            Map<String, Object> result = new HashMap<>();
+            result.put("matriks", matriks);
+            result.put("x", x);
+            bufferedReader.close();
+            fileReader.close();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Map<String, Object> inputRegresiFile() {
+        // Kamus Lokal
+        double x;
+        String namaFile, filePath, line;
+        int rows = 0, cols = 0;
+
+        // ALGORTIMA
+        input = new Scanner(System.in);
+        System.out.print("Nama file: "); // Masukan file path
+        namaFile = input.nextLine();
+        filePath = dir + namaFile + ".txt";
+        try {
+            // Memulai untuk mengukur matriks
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            // Mengukur ukuran matriks pada txt file
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] elemen = line.split(" ");
+                cols = elemen.length;
+                rows++;
+            }
+
+            bufferedReader.close();
+            fileReader.close();
+
+            // Memulai untuk membaca elemen matriks
+            fileReader = new FileReader(filePath);
+            bufferedReader = new BufferedReader(fileReader);
+
+            double[][] matriks = new double[rows - 1][cols];
+
+            // Membaca elemen pada matriks dan menyimpannya pada variabel matriks
+            int i = 0, j;
+            while ((line = bufferedReader.readLine()) != null && i < rows - 1) {
+                String[] elemen = line.split(" ");
+                for (j = 0; j < cols; j++) {
+                    matriks[i][j] = Float.parseFloat(elemen[j]);
+                }
+
+                i++;
+            }
+            String[] elemen = line.split(" ");
+
+            x = Double.parseDouble(elemen[0]);
+            Map<String, Object> result = new HashMap<>();
+            result.put("matriks", matriks);
+            result.put("x", x);
+            bufferedReader.close();
+            fileReader.close();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static double[][] inputInterpolasiKeyboard() {
@@ -99,4 +210,75 @@ public class Input {
         }
         return matriks;
     }
+
+    public static Map<String, Object> inputBicubicFile() {
+
+        // Kamus Lokal
+        String filePath, line;
+        int rows = 4, cols = 4;
+        double a = 0, b = 0;
+
+        // ALGORTIMA
+        Scanner path = new Scanner(System.in);
+        System.out.print("Path to txt file: "); // Masukan file path
+        filePath = path.nextLine();
+        path.close();
+        try {
+
+            // Memulai untuk mengukur matriks
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            bufferedReader.close();
+            fileReader.close();
+
+            // Memulai untuk membaca elemen matriks
+            fileReader = new FileReader(filePath);
+            bufferedReader = new BufferedReader(fileReader);
+
+            double[][] matrix = new double[rows][cols];
+
+            // Membaca elemen pada matriks dan menyimpannya pada variabel matriks
+            int i = 0, j;
+            while ((line = bufferedReader.readLine()) != null && i < rows) {
+                String[] elemen = line.split(" ");
+
+                for (j = 0; j < cols; j++) {
+                    matrix[i][j] = Double.parseDouble(elemen[j]);
+                }
+                i++;
+            }
+            String[] elemen = line.split(" ");
+
+            a = Double.parseDouble(elemen[0]);
+            b = Double.parseDouble(elemen[1]);
+
+            /*
+             * Fungsi.displayMatrix(matrix);
+             * System.out.println("a = " + a);
+             * System.out.println("b = " + b);
+             */
+
+            bufferedReader.close();
+            fileReader.close();
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("matrix", matrix);
+            result.put("a", a);
+            result.put("b", b);
+
+            if (a < 0 || a > 1 || b < 0 || b > 1) {
+                return null;
+            } else {
+                return result;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
 }
