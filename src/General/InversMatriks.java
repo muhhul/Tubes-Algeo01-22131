@@ -14,7 +14,6 @@ public class InversMatriks {
 
         // Membuat sebuah matrix identitas
         double[][] inverse = OperasiMatriks.CreateMatrixIdentitas(matrix);
-        
 
         // Menggunakan Gauss-Jordan elimination
         for (int i = 0; i < n; i++) {
@@ -25,20 +24,20 @@ public class InversMatriks {
                     maxRow = j;
                 }
             }
-            
+
             // Tukar baris i dengan baris maxRow jika perlu
             if (maxRow != i) {
                 // Tukar baris matrix
                 double[] temp = matrix[i];
                 matrix[i] = matrix[maxRow];
                 matrix[maxRow] = temp;
-                
+
                 // Tukar baris matriks identitas
                 temp = inverse[i];
                 inverse[i] = inverse[maxRow];
                 inverse[maxRow] = temp;
             }
-            
+
             pengkalian = matrix[i][i];
 
             // Cek apakah matriks singular atau tidak
@@ -71,18 +70,17 @@ public class InversMatriks {
     // Melakukan operasi inverse terhadap matrix dengan menggunakan metode Adjoint
     public static double[][] inverseAdjoint(double[][] matrix) {
         double determinant = OperasiMatriks.determinanKofaktor(matrix);
-    
+
         if (Math.abs(determinant) < 1e-10) {
             System.out.println("Matrix tersebut singular, tidak bisa diinverse.");
             return null;
         }
-    
+
         double pengkalian = 1 / determinant;
         double[][] Adjoin = OperasiMatriks.matrixAdjoin(matrix);
         double[][] inverse = new double[matrix.length][matrix.length];
         int i, j;
-    
-        
+
         for (i = 0; i < matrix.length; i++) {
             for (j = 0; j < matrix[i].length; j++) {
                 // Membuat agar tidak terdapat negative zero (-0.0)
@@ -93,7 +91,7 @@ public class InversMatriks {
                 }
             }
         }
-        
+
         return inverse;
     }
 
@@ -200,5 +198,4 @@ public class InversMatriks {
      * Fungsi.displayMatrix(inverse);
      * }
      */
-
 }
