@@ -58,7 +58,6 @@ public class Output {
         }
         Date date = new Date();
         temp = dir + dateFormat.format(date);
-        System.out.println(temp);
         File file = new File(temp + ".txt");
         try {
             file.createNewFile();
@@ -78,7 +77,9 @@ public class Output {
             WR.write("File dibuat pada: " + dateFormat.format(date) + "\n");
             WR.write(konten);
             WR.close();
+            Fungsi.clearScreen();
             System.out.println("Penulisan file berhasil!");
+            System.out.println("Lokasi file : " + path + "\n");
         } catch (IOException e) {
             System.out.println("Terjadi error dalam penulisan file!");
         }
