@@ -54,14 +54,14 @@ public class OperasiMatriks {
     }
 
     // Mencari hasil determinant dengan menggunakan cara cofactor
-    public static double determinanKofaktor(double[][] matriks) {
+    public static Double determinanKofaktor(double[][] matriks) {
 
         int n = matriks.length; //
         // Basis
         if (n == 1) {
             return matriks[0][0];
         } else if (matriks.length != matriks[0].length) {
-            return 0;
+            return null;
         }
 
         double det = 0.0;
@@ -92,9 +92,9 @@ public class OperasiMatriks {
         return det;
     }
 
-    public static double determinanReduksi(double[][] matriks) {
+    public static Double determinanReduksi(double[][] matriks) {
         if (matriks.length != matriks[0].length) {
-            return 0;
+            return null;
         }
         int i, j, k, x;
         double[] temp;
@@ -107,7 +107,7 @@ public class OperasiMatriks {
                 x++;
             }
             if (x == matriks.length) {
-                return 0;
+                return null;
             } else if (x != i) {
                 temp = matriks[i];
                 matriks[i] = matriks[x];
