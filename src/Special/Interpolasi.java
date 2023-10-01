@@ -207,8 +207,6 @@ public class Interpolasi {
         
         // Konstruksi matrix bicubic interpolation
         Bi = 0;
-        // Konstruksi matrix bicubic interpolation
-        Bi = 0;
         for (p = 0; p < 4; p++) {
             for (y = 0; y < 2; y++){
                 for (x = 0; x < 2; x++) {
