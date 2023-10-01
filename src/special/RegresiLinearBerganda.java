@@ -130,5 +130,8 @@ public class RegresiLinearBerganda {
                 System.out.print("- " + df.format(Math.abs(solution[i])) + " X" + i + " ");
             }
         }
+    }double hasil =0 ;
+    for(int i = 0; i < cols-1; i++){
+        hasil = hasil + (Math.pow(x, i)*solution[i]);
     }
 }
