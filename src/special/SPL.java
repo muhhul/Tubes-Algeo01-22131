@@ -36,33 +36,15 @@ public class SPL {
         return det;
     }
     
-    public static String[] splGauss(double[][] matriks) {
+    public static String[] splGauss(double[][] matrix) {
         return null;
     }
 
-    public static String[] splGaussJ(double[][] matriks) {
-        Scanner keyboard = new Scanner(System.in);
-        System.out.print("Masukkan jumlah baris matriks: ");
-        int rows = keyboard.nextInt();
-        System.out.print("Masukkan jumlah kolom matriks: ");
-        int cols = keyboard.nextInt();
-
-        double[][] matrix = new double[rows][cols];
-        System.out.println("Masukkan elemen-elemen matriks:");
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
-                matrix[i][j] = keyboard.nextDouble();
-            }
-        }
-
-        
-        System.out.println("Matriks yang diinputkan:");
-        for(int a = 0; a < rows; a++){
-            for(int j = 0; j < cols; j++){
-                System.out.print(matrix[a][j] + "\t");
-            }
-            System.out.println();
-        }
+    public static String[] splGaussJ(double[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        String[] keluaran = new String[cols-1]
+        String[] keluaran2 = new String[1]
         int n = matrix.length;
         double pengkalian;
         for(int r = 0; r < rows; r++){
@@ -87,7 +69,11 @@ public class SPL {
                 if (k != i) {
                     pengkalian = matrix[k][i];
                     for (int j = 0; j < cols; j++) {
-                        matrix[k][j] -= pengkalian * matrix[i][j];
+                        if(Math.abs(matrix[k][j] - pengkalian * matrix[i][j])<0.00000001){
+                            matrix[k][j]=0;
+                        }else{
+                            matrix[k][j] -= pengkalian * matrix[i][j];
+                        }
                     }
                 }
             }
@@ -119,7 +105,8 @@ public class SPL {
         }
 
         if(matrix[rows-1][cols-2] == 0 && matrix[rows-1][cols-1]!=0){
-            System.out.println("spl tidak memiliki solusi");
+            keluaran2[0] = "spl tidak memiliki solusi";
+            return keluaran2;
         }else if(((matrix[rows-1][cols-2] == 0 && matrix[rows-1][cols-1]==0) || rows!=cols-1)&&trivial==1){
             String[][] temppp = new String[cols-1][3];
             for(int i = 0; i < cols-1; i++){
@@ -138,21 +125,12 @@ public class SPL {
                     }
                 }
             }
-            System.out.println("Matriks yang diinputkan:");
-            for(int a = 0; a < rows; a++){
-                for(int j = 0; j < cols; j++){
-                    System.out.print(matrix[a][j] + "\t");
-                }
-                System.out.println();
-            }
-            for(int j = 0; j < cols-1; j++){
-                    System.out.println(temppp[j][1]);
-            }
             int count = cols-2;
             for(int i = rows-1; i >= 0; i--){
                 double nilsem = 0;
                 if(temppp[count][1]=="0"){
                     nilsem = (matrix[i][cols-1]/(Double.valueOf(temppp[count][2])));
+                    int cek =0;
                     for(int j = 0; j < cols-1; j++){
                         if(j!=count){
                             if(matrix[i][j]!=0){
@@ -173,15 +151,19 @@ public class SPL {
                             }
                         }
                     }
-                    if(temppp[count][0]==""&&nilsem==0){
+                    for(int k = 0;k<cols-1;k++){
+                        if(matrix[i][k]!=0){
+                            cek = 1;
+                        }
+                    }
+                    if(cek==0){
                         count++;
                     }
-                    if(nilsem<0){
+                    else if(nilsem<0){
                         temppp[count][0] = ""+temppp[count][0] + Double.toString(nilsem); 
                     }else if(nilsem!=0 || (nilsem==0&&temppp[count][0]=="")){
                         temppp[count][0] = ""+Double.toString(nilsem) + temppp[count][0];
                     }
-                    System.out.println(temppp[count][0]);
                     count--;
                 }else{
                     count--;
@@ -189,23 +171,17 @@ public class SPL {
                 }
             }
             for(int i = 0; i < cols-1; i++){
-                System.out.println("x[" + i + "] = " + temppp[i][0]);
+                keluaran[i] = temppp[i][0];
             }
         }else{
             for(int i = 0; i < cols-1; i++){
-                System.out.println("x[" + i + "] = " + matrix[i][cols-1]);
+                keluaran[i] = matrix[i][cols-1];
             }
-        }System.out.println("Matriks yang diinputkan:");
-        for(int a = 0; a < rows; a++){
-            for(int j = 0; j < cols; j++){
-                System.out.print(matrix[a][j] + "\t");
-            }
-            System.out.println();
         }
-        return null;
+        return keluaran;
     }
 
-    public static String[] splInvers(double[][] matriks) {
+    public static String[] splInvers(double[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
 
