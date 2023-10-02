@@ -37,7 +37,179 @@ public class SPL {
     }
     
     public static String[] splGauss(double[][] matrix) {
-        return null;
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        String[] keluaran = new String[cols-1]
+        String[] keluaran2 = new String[1]
+
+        for(int i = 0; i < rows; i++){
+            int maxRow = i;
+            for(int k = i + 1; k < rows; k++){
+                if(Math.abs(matrix[k][i]) > Math.abs(matrix[maxRow][i])){
+                    maxRow = k;
+                }
+            }
+
+            double[] temp = matrix[i];
+            matrix[i] = matrix[maxRow];
+            matrix[maxRow] = temp;
+        }
+
+        for(int r = 0; r < rows; r++){
+            for(int k = 0; k < rows; k++){
+                int count1=0;
+                int count2=0;
+                for(int i = 0; i < cols; i++){
+                    if(matrix[r][i]!=0){
+                        break;
+                    }count1++;
+                }for(int i = 0; i < cols; i++){
+                    if(matrix[k][i]!=0){
+                        break;
+                    }count2++;
+                }if(count2>count1){
+                    double[] temp = matrix[r];
+                    matrix[r] = matrix[k];
+                    matrix[k] = temp;
+                }
+            }
+        }
+
+        for(int i = cols-1; i >= 0; i--){
+            matrix[0][i] =  matrix[0][i]/matrix[0][0];
+        }
+        int x=1,y=1;
+        for(int i = 1; i < rows; i++){
+            int tempp=0;
+            for(int l = 0; l < x; l++){
+                if(matrix[i][l] != 0){
+                    double temp = matrix[i][l]/matrix[l][l];
+                    for(int j = l; j<cols;j++){
+                        if(Math.abs(matrix[i][j] - (matrix[l][j]*temp)) <= 0.00000000001){
+                            matrix[i][j]=0;
+                        }else{
+                            matrix[i][j] = matrix[i][j] - (matrix[l][j]*temp);
+                        }
+                    }
+                }else{
+                    tempp++;
+                }
+            }
+            if(matrix[i][x] != 0){
+                for(int k = cols-1; k >= x; k--){
+                    matrix[i][k] =  matrix[i][k]/matrix[i][x];
+                }
+            }
+            if(matrix[i][x]!=1 && x!=cols-1){
+                i--;
+                if(x==cols-1){
+                    x=i;
+                }else{
+                    y++;
+                    x++;
+                }
+            }else{
+                y++;
+                x=i+1;
+            }
+        }
+        double[] solution = new double[cols-1];
+        for(int i = rows - 1; i >= 0; i--){
+            double sum = 0.0;
+            for(int j = i + 1; j < cols-1; j++){
+                sum = sum + (matrix[i][j] * solution[j]);
+            }
+            solution[i] = (matrix[i][cols-1] - sum) / matrix[i][i];
+        }
+
+        int trivial = 0;
+        for(int i = 0;i<rows;i++){
+            if(matrix[i][cols-1]!=0){
+                trivial = 1;
+            }
+        }
+
+        if(matrix[rows-1][cols-2] == 0 && matrix[rows-1][cols-1]!=0){
+            keluaran2 = "spl tidak memiliki solusi";
+            return keluaran2;
+        }else if(((matrix[rows-1][cols-2] == 0 && matrix[rows-1][cols-1]==0) || rows!=cols-1)&&trivial==1){
+            String[][] temppp = new String[cols-1][3];
+            for(int i = 0; i < cols-1; i++){
+                int huruf = 97+i;
+                char temp = (char) huruf;
+                temppp[i][0]=""+temp;
+                temppp[i][1]="1";
+            }
+            for(int i = 0; i < rows; i++){
+                for(int j = 0; j < cols-1; j++){
+                    if(matrix[i][j]!=0){
+                        temppp[j][0]="";
+                        temppp[j][1]="0";
+                        temppp[j][2]=Double.toString(matrix[i][j]);
+                        break;
+                    }
+                }
+            }
+            int count = cols-2;
+            for(int i = rows-1; i >= 0; i--){
+                double nilsem = 0;
+                if(temppp[count][1]=="0"){
+                    nilsem = (matrix[i][cols-1]/(Double.valueOf(temppp[count][2])));
+                    int cek =0;
+                    for(int j = 0; j < cols-1; j++){
+                        if(j!=count){
+                            if(matrix[i][j]!=0){
+                                matrix[i][j] = matrix[i][j] * (-1);
+                                if(temppp[j][1]=="0"){
+                                    if((matrix[i][j]/(Double.valueOf(temppp[count][2])))*Double.valueOf(temppp[j][0])>0){
+                                        nilsem=nilsem+((matrix[i][j]/(Double.valueOf(temppp[count][2])))*Double.valueOf(temppp[j][0]));
+                                    }else{
+                                        nilsem=nilsem+((matrix[i][j]/(Double.valueOf(temppp[count][2])))*Double.valueOf(temppp[j][0]));
+                                    }
+                                }else{
+                                    temppp[count][1] = "1";
+                                    if(matrix[i][j]>0&&temppp[count][0]!=""){
+                                        temppp[count][0] = temppp[count][0] + " + ";
+                                    }
+                                    temppp[count][0] = temppp[count][0] + Double.toString(matrix[i][j]/(Double.valueOf(temppp[count][2]))) + temppp[j][0];
+                                }
+                            }
+                        }
+                    }
+                    for(int k = 0;k<cols-1;k++){
+                        if(matrix[i][k]!=0){
+                            cek = 1;
+                        }
+                    }
+                    if(cek==0){
+                        count++;
+                    }
+                    else if(nilsem<0){
+                        temppp[count][0] = ""+temppp[count][0] + Double.toString(nilsem); 
+                    }else if(nilsem!=0 || (nilsem==0&&temppp[count][0]=="")){
+                        temppp[count][0] = ""+Double.toString(nilsem) + temppp[count][0];
+                    }
+                    count--;
+                }else{
+                    count--;
+                    i++;
+                }
+            }
+            for(int i = 0; i < cols-1; i++){
+                keluaran[i] = temppp[i][0];
+            }
+        }else{
+            if(trivial==0){
+                for(int i = 0; i < cols-1; i++){
+                    keluaran[i] = "0.0";
+                }
+            }else{
+                for(int i = 0; i < cols-1; i++){
+                    keluaran[i] = solution[i];
+                }
+            }
+        }
+        return keluaran;
     }
 
     public static String[] splGaussJ(double[][] matrix) {
