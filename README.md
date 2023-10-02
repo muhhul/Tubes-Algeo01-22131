@@ -15,7 +15,7 @@ awesome when someone starts to use it.
 | :------: | :--------------------: | :------------------: |
 | 13522131 |  Owen Tobias Sinurat   |      Main Bola       |
 | 13522xxx |  Ahmad Thoriq Saputra  | Mimpi Bisa Main Bola |
-| 13522xxx | Muhammad Fatihul Irhab |   Ke Kamar Thoriq    |
+| 13522143 | Muhammad Fatihul Irhab |   Ke Kamar Thoriq    |
 
 ## Instalasi
 
