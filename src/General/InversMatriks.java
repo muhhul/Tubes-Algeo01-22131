@@ -11,26 +11,28 @@ public class InversMatriks {
         // KAMUS LOKAL
         int n = matrix.length;
         double pengkalian;
+        double[][] inverse, cMatrix;
 
         // Membuat sebuah matrix identitas
-        double[][] inverse = OperasiMatriks.CreateMatrixIdentitas(matrix);
+        cMatrix = OperasiMatriks.copyMatrix(matrix);
+        inverse = OperasiMatriks.CreateMatrixIdentitas(cMatrix);
 
         // Menggunakan Gauss-Jordan elimination
         for (int i = 0; i < n; i++) {
             // Cari baris dengan elemen terbesar di kolom i sebagai pivot
             int maxRow = i;
             for (int j = i + 1; j < n; j++) {
-                if (Math.abs(matrix[j][i]) > Math.abs(matrix[maxRow][i])) {
+                if (Math.abs(cMatrix[j][i]) > Math.abs(cMatrix[maxRow][i])) {
                     maxRow = j;
                 }
             }
 
             // Tukar baris i dengan baris maxRow jika perlu
             if (maxRow != i) {
-                // Tukar baris matrix
-                double[] temp = matrix[i];
-                matrix[i] = matrix[maxRow];
-                matrix[maxRow] = temp;
+                // Tukar baris cMatrix
+                double[] temp = cMatrix[i];
+                cMatrix[i] = cMatrix[maxRow];
+                cMatrix[maxRow] = temp;
 
                 // Tukar baris matriks identitas
                 temp = inverse[i];
@@ -38,26 +40,25 @@ public class InversMatriks {
                 inverse[maxRow] = temp;
             }
 
-            pengkalian = matrix[i][i];
+            pengkalian = cMatrix[i][i];
 
             // Cek apakah matriks singular atau tidak
             if (pengkalian == 0.0f) {
-                System.out.println("Matrix tersebut singular, tidak bisa diinverse.");
                 return null;
             }
 
             // Mengalikan row dan elemen seterusnya
             for (int j = 0; j < n; j++) {
-                matrix[i][j] /= pengkalian;
+                cMatrix[i][j] /= pengkalian;
                 inverse[i][j] /= pengkalian;
             }
 
             // Eliminasi elemen lain
             for (int k = 0; k < n; k++) {
                 if (k != i) {
-                    pengkalian = matrix[k][i];
+                    pengkalian = cMatrix[k][i];
                     for (int j = 0; j < n; j++) {
-                        matrix[k][j] -= pengkalian * matrix[i][j];
+                        cMatrix[k][j] -= pengkalian * cMatrix[i][j];
                         inverse[k][j] -= pengkalian * inverse[i][j];
                     }
                 }
@@ -72,7 +73,6 @@ public class InversMatriks {
         double determinant = OperasiMatriks.determinanKofaktor(matrix);
 
         if (Math.abs(determinant) < 1e-10) {
-            System.out.println("Matrix tersebut singular, tidak bisa diinverse.");
             return null;
         }
 
