@@ -205,7 +205,7 @@ public class SPL {
                     if (cek == 0) {
                         count++;
                     } else if (nilsem < 0) {
-                        temppp[count][0] = "" + temppp[count][0] + Double.toString(nilsem);
+                        temppp[count][0] = "" + temppp[count][0] + " - " + Double.toString(Math.abs(nilsem));
                     } else if (nilsem != 0 || (nilsem == 0 && temppp[count][0] == "")) {
                         temppp[count][0] = "" + Double.toString(nilsem) + temppp[count][0];
                     }
