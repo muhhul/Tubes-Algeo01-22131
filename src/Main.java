@@ -141,7 +141,7 @@ public class Main {
                     switch (pilSub) {
                         case 1:
                             if (InversMatriks.inverseGaussJordan(matriks) == null) {
-                                luaran = luaran.concat("Matriks tidak memiliki balikan.");
+                                luaran = luaran.concat("Matriks singular sehingga tidak memiliki balikan.");
                             } else {
                                 luaran = luaran
                                         .concat(Konversi.matriksKeString(InversMatriks.inverseGaussJordan(matriks)));
@@ -149,7 +149,7 @@ public class Main {
                             break;
                         case 2:
                             if (InversMatriks.inverseAdjoint(matriks) == null) {
-                                luaran = luaran.concat("Matriks tidak memiliki balikan.");
+                                luaran = luaran.concat("Matriks singular sehingga tidak memiliki balikan.");
                             } else {
                                 luaran = luaran
                                         .concat(Konversi.matriksKeString(InversMatriks.inverseAdjoint(matriks)));
@@ -169,8 +169,7 @@ public class Main {
                     break;
                 case 4:
                     x = 0;
-                    Fungsi.metodeInput();
-                    pilMetode = input.nextInt();
+                    pilMetode = Fungsi.metodeInput();
                     switch (pilMetode) {
                         case 1:
                             System.out.print("Jumlah titik: ");
@@ -178,10 +177,12 @@ public class Main {
                             System.out.print("Nilai x yang akan ditaksir: ");
                             n = input.nextInt();
                             matriks = Input.inputMatriksKeyboard(n, 2);
+                            break;
                         case 2:
                             argument = Input.inputPolinomFile();
                             matriks = (double[][]) argument.get("matriks");
                             x = (double) argument.get("x");
+                            break;
                         default:
                             System.out.println("Input salah!");
                     }
@@ -196,8 +197,7 @@ public class Main {
                 case 5:
                     a = 0;
                     b = 0;
-                    Fungsi.metodeInput();
-                    pilMetode = input.nextInt();
+                    pilMetode = Fungsi.metodeInput();
                     switch (pilMetode) {
                         case 1:
                             matriks = Input.inputMatriksKeyboard(4, 4);
@@ -212,13 +212,16 @@ public class Main {
                                     System.out.println("Nilai a dan b harus dalam rentang [0..1]");
                                 }
                             } while (a < 0 || a > 1 || b < 0 || b > 1);
+                            break;
                         case 2:
                             argument = Input.inputBicubicFile();
                             matriks = (double[][]) argument.get("matrix");
                             a = (double) argument.get("a");
                             b = (double) argument.get("b");
+                            break;
                         default:
                             System.out.println("Input salah!");
+                            break;
                     }
                     luaran = luaran.concat(Konversi.bicubicKeString(Interpolasi.interpolasiBicubic(matriks, a, b)));
                     pilMetode = Fungsi.metodeOutput();
@@ -230,8 +233,7 @@ public class Main {
                     break;
                 case 6:
                     x = 0;
-                    Fungsi.metodeInput();
-                    pilMetode = input.nextInt();
+                    pilMetode = Fungsi.metodeInput();
                     switch (pilMetode) {
                         case 1:
                             System.out.print("Jumlah peubah x: ");
@@ -241,10 +243,12 @@ public class Main {
                             System.out.print("Nilai x yang akan ditaksir:  ");
                             x = input.nextInt();
                             matriks = Input.inputMatriksKeyboard(m, n + 1);
+                            break;
                         case 2:
                             argument = Input.inputBicubicFile();
                             matriks = (double[][]) argument.get("matriks");
                             x = (double) argument.get("x");
+                            break;
                         default:
                             System.out.println("Input salah!");
                     }

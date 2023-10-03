@@ -214,15 +214,15 @@ public class Input {
     public static Map<String, Object> inputBicubicFile() {
 
         // Kamus Lokal
-        String filePath, line;
+        String filePath, fileName, line;
         int rows = 4, cols = 4;
         double a = 0, b = 0;
 
         // ALGORTIMA
-        Scanner path = new Scanner(System.in);
-        System.out.print("Path to txt file: "); // Masukan file path
-        filePath = path.nextLine();
-        path.close();
+        input = new Scanner(System.in);
+        System.out.print("File name: "); // Masukan file path
+        fileName = input.nextLine();
+        filePath = dir + fileName + ".txt";
         try {
 
             // Memulai untuk mengukur matriks
