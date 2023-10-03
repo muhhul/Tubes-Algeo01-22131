@@ -263,8 +263,6 @@ public class SPL {
     }
 
     public static String[] splGaussJ(double[][] matriks) {
-        System.out.println(Konversi.matriksKeString(matrix));
-        Fungsi.pause();
         int rows = matriks.length;
         int cols = matriks[0].length;
         String[] keluaran = new String[cols - 1];
@@ -449,6 +447,14 @@ public class SPL {
         int rows = matriks.length;
         int cols = matriks[0].length;
 
+        String keluaran[] = new String[rows];
+        String keluaran2[] = new String[1];
+        if(rows!=cols-1){
+            keluaran2[0] = "tidak bisa menggunakan metode ini, karena banyak kolom dari baris lebih dari satu";
+            return keluaran2;
+        }
+        cols--;
+        
         int n = matriks.length;
         double pengkalian;
         double[][] inverse = new double[matriks.length][matriks[0].length];
@@ -460,8 +466,6 @@ public class SPL {
                     inverse[i][j] = 0;
                 }
             }
-        String keluaran[] = new String[rows];
-        String keluaran2[] = new String[1];
         for (int i = 0; i < n; i++) {
             pengkalian = matriks[i][i];
             if (pengkalian == 0.0f) {
@@ -496,6 +500,14 @@ public class SPL {
     public static String[] splCramer(double[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
+        String keluaran[] = new String[cols - 1];
+        String keluaran2[] = new String[1];
+
+        if(rows!=cols-1){
+            keluaran2[0] = "tidak bisa menggunakan metode ini, karena banyak kolom dari baris lebih dari satu";
+            return keluaran2;
+        }
+        
         double[][] newMatrix = new double[rows][cols - 1];
         double[][] temp = new double[rows][cols - 1];
         for (int i = 0; i < rows; i++) {
@@ -504,8 +516,6 @@ public class SPL {
                 temp[i][j] = matrix[i][j];
             }
         }
-        String keluaran[] = new String[cols - 1];
-        String keluaran2[] = new String[1];
         for (int i = 0; i < cols - 1; i++) {
             if (determinanKofaktor(newMatrix) == 0.0f) {
                 keluaran2[0] = "Matriks bersifat singular, tidak ada solusi unik. Silahkan gunakan metode lain";
