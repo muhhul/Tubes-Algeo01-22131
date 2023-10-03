@@ -18,6 +18,7 @@ public class Konversi {
             int panjang = Fungsi.maxLengthMatriks(matrix);
             for (int row = 0; row < matrix.length; row++) {
                 for (int col = 0; col < matrix[row].length; col++) {
+
                     temp = String.format("%" + panjang + "." + panjang + "s | ", String.valueOf(matrix[row][col]));
                     luaran = luaran.concat(temp);
                 }
