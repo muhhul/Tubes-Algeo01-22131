@@ -19,32 +19,6 @@ public class Output {
         System.out.println(luaran + "\n");
         Fungsi.pause();
     }
-    // Salin matrix ke file (.txt)
-    /*
-     * public static void salinMatrixToTxt(double[][] matrix) {
-     * // KAMUS LOKAL
-     * int i, j;
-     * 
-     * // ALGORITMA
-     * Scanner input = new Scanner(System.in);
-     * System.out.print("File path yang ingin anda salin matrix: ");
-     * String FilePath = input.nextLine();
-     * try {
-     * FileWriter writer = new FileWriter(FilePath);
-     * for (i = 0; i < matrix.length; i++) {
-     * for (j = 0; j < matrix[i].length; j++) {
-     * writer.write(matrix[i][j] + " ");
-     * }
-     * writer.write("\n");
-     * }
-     * 
-     * } catch (Exception e) {
-     * e.printStackTrace();
-     * } finally {
-     * input.close();
-     * }
-     * }
-     */
 
     // membuat file dengan nama waktu pembuatan file
     public static Date buatFile() {

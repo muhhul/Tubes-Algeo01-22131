@@ -152,47 +152,11 @@ public class Interpolasi {
                 k++;
             }
         }
+
+
         double[] balikan = { a, b, hasil };
         return balikan;
     }
 
-    // Sub-menu Bicubic
-    /*
-     * public static void main(String[] args) {
-     * // KAMUS
-     * double[][] matrix;
-     * double a, b;
-     * 
-     * // ALGORITMA
-     * Scanner input = new Scanner(System.in);
-     * Map<String, Object> getMatrix = null;
-     * 
-     * // Metode mengambil matrix
-     * while (true) {
-     * System.out.println("Input matrix via:\n1. File (.txt)\n2. User");
-     * System.out.print("Via = ");
-     * String via = input.nextLine();
-     * if (via.equals("2")) {
-     * getMatrix = inputFromUser();
-     * break;
-     * } else if (via.equals("1")) {
-     * getMatrix = inputFromTxt();
-     * if (getMatrix != null) {
-     * break;
-     * }
-     * System.exit(0);
-     * } else {
-     * System.out.println("Input salah harap untuk input hanya \"1\" atau \"2\".");
-     * }
-     * }
-     * 
-     * input.close();
-     * 
-     * matrix = (double[][]) getMatrix.get("matrix");
-     * a = (double) getMatrix.get("a");
-     * b = (double) getMatrix.get("b");
-     * 
-     * interpolasiBicubic(matrix, a, b);
-     * }
-     */
+   
 }

@@ -84,8 +84,7 @@ public class Konversi {
     public static String bicubicKeString(double[] array) {
         String luaran = "";
         luaran = luaran
-                .concat(String.format("Hasil dari fungsi bicubic:\nf(%.2f,%.2f) = %.2f\n", array[0], array[1],
-                        array[2]));
+                .concat(String.format("Hasil dari fungsi bicubic:\nf(%.2f,%.2f) = %f\n", array[0], array[1],array[2]));
         return luaran;
     }
 
