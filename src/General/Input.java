@@ -1,6 +1,7 @@
 package General;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,12 +36,19 @@ public class Input {
         // Kamus Lokal
         String namaFile, filePath, line;
         int rows = 0, cols = 0;
-
+        File f;
         // ALGORTIMA
         input = new Scanner(System.in);
-        System.out.print("Nama file: "); // Masukan file path
-        namaFile = input.nextLine();
-        filePath = dir + namaFile + ".txt";
+        do {
+            System.out.print("Nama file: "); // Masukan file path
+            namaFile = input.nextLine();
+            filePath = dir + namaFile + ".txt";
+            f = new File(filePath);
+            if (!f.exists() || f.isDirectory()) {
+                System.out.println("File tidak ditemukan.");
+                Fungsi.pause();
+            }
+        } while (!f.exists() || f.isDirectory());
         try {
             // Memulai untuk mengukur matriks
             FileReader fileReader = new FileReader(filePath);
@@ -88,12 +96,19 @@ public class Input {
         double x;
         String namaFile, filePath, line;
         int rows = 0;
-
+        File f;
         // ALGORTIMA
         input = new Scanner(System.in);
-        System.out.print("Nama file: "); // Masukan file path
-        namaFile = input.nextLine();
-        filePath = dir + namaFile + ".txt";
+        do {
+            System.out.print("Nama file: "); // Masukan file path
+            namaFile = input.nextLine();
+            filePath = dir + namaFile + ".txt";
+            f = new File(filePath);
+            if (!f.exists() || f.isDirectory()) {
+                System.out.println("File tidak ditemukan.");
+                Fungsi.pause();
+            }
+        } while (!f.exists() || f.isDirectory());
         try {
             // Memulai untuk mengukur matriks
             FileReader fileReader = new FileReader(filePath);
@@ -144,11 +159,19 @@ public class Input {
         String namaFile, filePath, line;
         int rows = 0, cols = 0;
 
+        File f;
         // ALGORTIMA
         input = new Scanner(System.in);
-        System.out.print("Nama file: "); // Masukan file path
-        namaFile = input.nextLine();
-        filePath = dir + namaFile + ".txt";
+        do {
+            System.out.print("Nama file: "); // Masukan file path
+            namaFile = input.nextLine();
+            filePath = dir + namaFile + ".txt";
+            f = new File(filePath);
+            if (!f.exists() || f.isDirectory()) {
+                System.out.println("File tidak ditemukan.");
+                Fungsi.pause();
+            }
+        } while (!f.exists() || f.isDirectory());
         try {
             // Memulai untuk mengukur matriks
             FileReader fileReader = new FileReader(filePath);
@@ -217,18 +240,23 @@ public class Input {
         String filePath, fileName, line;
         int rows = 4, cols = 4;
         double a = 0, b = 0;
-
+        File f;
         // ALGORTIMA
         input = new Scanner(System.in);
-        System.out.print("File name: "); // Masukan file path
-        fileName = input.nextLine();
-        filePath = dir + fileName + ".txt";
+        do {
+            System.out.print("Nama file: "); // Masukan file path
+            fileName = input.nextLine();
+            filePath = dir + fileName + ".txt";
+            f = new File(filePath);
+            if (!f.exists() || f.isDirectory()) {
+                System.out.println("File tidak ditemukan.");
+                Fungsi.pause();
+            }
+        } while (!f.exists() || f.isDirectory());
         try {
-
             // Memulai untuk mengukur matriks
             FileReader fileReader = new FileReader(filePath);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-
             bufferedReader.close();
             fileReader.close();
 
