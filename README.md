@@ -1,4 +1,4 @@
-![Logo of the project](https://raw.githubusercontent.com/jehna/readme-best-practices/master/sample-logo.png)
+![squad](./image.jpg)
 
 # Tugas Besar 1 IF2123 Aljabar Linear dan Geometri 2023
 
@@ -16,21 +16,6 @@ awesome when someone starts to use it.
 | 13522131 |  Owen Tobias Sinurat   |      Main Bola       |
 | 13522141 |  Ahmad Thoriq Saputra  | Mimpi Bisa Main Bola |
 | 13522143 | Muhammad Fatihul Irhab |   Ke Kamar Thoriq    |
-
-## Instalasi
-
-## Instalasi
-
-A quick introduction of the minimal setup you need to get a hello world up &
-running.
-
-```shell
-packagemanager install awesome-project
-awesome-project start
-awesome-project "Do something!"  # prints "Nah."
-```
-
-Here you should say what actually happens when you execute the code above.
 
 ## Spesifikasi Program
 
@@ -71,6 +56,6 @@ Pastikan terdapat folder `result` di dalam folder `test` agar hasil perhitungan 
 
 ## Studi Kasus
 
-    Untuk melakukan pengetesan pada program, sudah disediakan beberapa studi kasus di folder
+    Untuk melakukan pengetesan pada program menggunakan file, bisa menaruh file di folder 
 
-`/test/case`
+`test/case`
