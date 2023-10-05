@@ -180,7 +180,7 @@ public class Input {
             // Mengukur ukuran matriks pada txt file
             while ((line = bufferedReader.readLine()) != null) {
                 String[] elemen = line.split(" ");
-                cols = elemen.length;
+                cols = elemen.length+1; //diubah
                 rows++;
             }
 

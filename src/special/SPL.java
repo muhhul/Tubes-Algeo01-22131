@@ -238,8 +238,10 @@ public class SPL {
                     if (cek == 0) {
                         count++;
                     } else if (nilsem < 0) {
+                        nilsem = Math.round(nilsem * 1000000.0) / 1000000.0;
                         temppp[count][0] = ""+temppp[count][0] + " - " + Double.toString(Math.abs(nilsem)); 
                     } else if (nilsem != 0 || (nilsem == 0 && temppp[count][0] == "")) {
+                        nilsem = Math.round(nilsem * 1000000.0) / 1000000.0;
                         temppp[count][0] = ""+temppp[count][0] + " + " + Double.toString(Math.abs(nilsem)); 
                     }
                     count--;
@@ -258,6 +260,7 @@ public class SPL {
                 }
             } else {
                 for (int i = 0; i < cols - 1; i++) {
+                    solution[i] = Math.round(solution[i] * 1000000.0) / 1000000.0;
                     keluaran[i] = Double.toString(solution[i]);
                 }
             }
@@ -431,8 +434,10 @@ public class SPL {
                     if (cek == 0) {
                         count++;
                     } else if (nilsem < 0) {
+                        nilsem = Math.round(nilsem * 1000000.0) / 1000000.0;
                         temppp[count][0] = ""+temppp[count][0] + " - " + Double.toString(Math.abs(nilsem)); 
                     } else if (nilsem != 0 || (nilsem == 0 && temppp[count][0] == "")) {
+                        nilsem = Math.round(nilsem * 1000000.0) / 1000000.0;
                         temppp[count][0] = ""+temppp[count][0] + " + " + Double.toString(Math.abs(nilsem)); 
                     }
                     count--;
@@ -449,7 +454,8 @@ public class SPL {
             }
         } else {
             for (int i = 0; i < cols - 1; i++) {
-                keluaran[i] = Double.toHexString(matrix[i][cols - 1]);
+                matrix[i][cols-1] = Math.round(matrix[i][cols-1] * 1000000.0) / 1000000.0;
+                keluaran[i] = Double.toString(matrix[i][cols - 1]);
             }
         }
         return keluaran;
@@ -462,7 +468,7 @@ public class SPL {
         String keluaran[] = new String[rows];
         String keluaran2[] = new String[1];
         if (rows != cols - 1) {
-            keluaran2[0] = "SPL tidak memiliki solusi.";
+            keluaran2[0] = "SPL tidak bisa diselesaikan menggunakan metode ini";
             return keluaran2;
         }
         cols--;
@@ -481,7 +487,7 @@ public class SPL {
         for (int i = 0; i < n; i++) {
             pengkalian = matriks[i][i];
             if (pengkalian == 0.0f) {
-                keluaran2[0] = "SPL tidak memiliki solusi.";
+                keluaran2[0] = "SPL tidak bisa diselesaikan menggunakan metode ini";
                 return keluaran2;
             }
             for (int j = 0; j < n; j++) {
@@ -501,24 +507,23 @@ public class SPL {
 
         for (int i = 0; i < rows; i++) {
             double temp = 0;
-            for (int j = 0; j < n; j++) {
-                temp = temp + (inverse[i][j] * matriks[j][cols - 1]);
+            for (int j = 0; j < cols; j++) {
+                temp = temp + (inverse[i][j] * matriks[j][cols]);
             }
+            temp = Math.round(temp * 1000000.0) / 1000000.0;
             keluaran[i] = String.valueOf(temp);
         }
         return keluaran;
     }
 
     public static String[] splCramer(double[][] matrix) {
-        System.out.println(Konversi.matriksKeString(matrix));
-        Fungsi.pause();
         int rows = matrix.length;
         int cols = matrix[0].length;
         String keluaran[] = new String[cols - 1];
         String keluaran2[] = new String[1];
 
         if (rows != cols - 1) {
-            keluaran2[0] = "SPL tidak memiliki solusi.";
+            keluaran2[0] = "SPL tidak bisa diselesaikan menggunakan metode ini";
             return keluaran2;
         }
 
@@ -532,7 +537,7 @@ public class SPL {
         }
         for (int i = 0; i < cols - 1; i++) {
             if (determinanKofaktor(newMatrix) == 0.0f) {
-                keluaran2[0] = "SPL tidak memiliki solusi.";
+                keluaran2[0] = "SPL tidak bisa diselesaikan menggunakan metode ini";
                 return keluaran2;
             }
             double detM1 = determinanKofaktor(newMatrix);
@@ -543,7 +548,10 @@ public class SPL {
             for (int j = 0; j < rows; j++) {
                 temp[j][i] = matrix[j][i];
             }
-            keluaran[i] = String.valueOf(detM2 / detM1);
+            double hasil;
+            hasil = detM2/detM1;
+            hasil = Math.round(hasil * 1000000.0) / 1000000.0;
+            keluaran[i] = String.valueOf(hasil);
         }
         return keluaran;
     }

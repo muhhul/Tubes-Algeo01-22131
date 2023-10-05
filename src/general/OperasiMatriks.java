@@ -238,5 +238,9 @@ public class OperasiMatriks {
         }
     }
 
+    public static void main(String[] args) {
+        matrixHilbert();
+    }
+
 
 }

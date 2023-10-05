@@ -84,7 +84,8 @@ public class Konversi {
     public static String bicubicKeString(double[] array) {
         String luaran = "";
         luaran = luaran
-                .concat(String.format("Hasil dari fungsi bicubic:\nf(%.2f,%.2f) = %f\n", array[0], array[1],array[2]));
+                .concat(String.format("Hasil dari fungsi bicubic:\nf(%.2f,%.2f) = %f\n", array[0], array[1],
+                        array[2]));
         return luaran;
     }
 
@@ -94,13 +95,13 @@ public class Konversi {
         luaran = luaran.concat("Persamaan regresi linear:\n");
         luaran = luaran.concat("f(x) = ");
 
-        for (i = 0; i <= array.length - 2; i++) {
+        for (i = 0; i < array.length - 2; i++) {
             if (i == 0) {
                 variabel = "";
             } else if (i == 1) {
-                variabel = "x0";
+                variabel = "x1";
             } else {
-                variabel = ("x" + (i - 1));
+                variabel = ("x" + (i)); //diubah
             }
             if (array[i] == 0.0) {
                 continue;
@@ -116,7 +117,7 @@ public class Konversi {
             }
         }
         luaran = luaran.concat("\n\nSolusi:\n");
-        luaran = luaran.concat("f(" + array[array.length - 2] + ") = " + array[array.length - 1] + "\n");
+        luaran = luaran.concat("f(X" + (array.length-3) + ") = " + array[array.length - 1] + "\n");//diubah
         return luaran;
     }
 }

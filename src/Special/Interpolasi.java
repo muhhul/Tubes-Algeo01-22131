@@ -1,53 +1,84 @@
 package Special;
 
 import General.OperasiMatriks;
+
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+import General.Fungsi;
 import General.InversMatriks;
+import General.Konversi;
 
 public class Interpolasi {
 
     // Mencari interpolasi polinom
     public static double[] InterpolasiPolinom(double[][] matrix, double nilai) {
         int rows = matrix.length;
-        int cols = matrix[0].length;
+        int cols = rows+1;//diubah
+
+        double[][] newmatrix = new double[rows][cols];
+        for(int i = 0; i < rows; i++){
+            double temp = matrix[i][0];
+            for(int j = 0; j < cols; j++){
+                if(j==0){
+                    newmatrix[i][j]=1;
+                }else if(j==rows){
+                    temp = matrix[i][1];
+                    newmatrix[i][j]=temp;
+                }else{
+                    newmatrix[i][j]=Math.pow(temp, j);
+                    //DecimalFormat df = new DecimalFormat("#.#########");
+                    //newmatrix[i][j] = Double.valueOf(df.format(newmatrix[i][j]));
+                    //newmatrix[i][j] = Math.round(newmatrix[i][j] * 1000000.0) / 1000000.0;
+                }
+            }
+        }
+
         for (int i = 0; i < rows; i++) {
             int maxRow = i;
             for (int k = i + 1; k < rows; k++) {
-                if (Math.abs(matrix[k][i]) > Math.abs(matrix[maxRow][i])) {
+                if (Math.abs(newmatrix[k][i]) > Math.abs(newmatrix[maxRow][i])) {
                     maxRow = k;
                 }
             }
 
-            double[] temp = matrix[i];
-            matrix[i] = matrix[maxRow];
-            matrix[maxRow] = temp;
+            double[] temp = newmatrix[i];
+            newmatrix[i] = newmatrix[maxRow];
+            newmatrix[maxRow] = temp;
         }
 
         for (int i = cols - 1; i >= 0; i--) {
-            matrix[0][i] = matrix[0][i] / matrix[0][0];
+            newmatrix[0][i] = newmatrix[0][i] / newmatrix[0][0];
         }
         int x = 1, y = 1;
         for (int i = 1; i < rows; i++) {
             int tempp = 0;
             for (int l = 0; l < x; l++) {
-                if (matrix[i][l] != 0) {
-                    double temp = matrix[i][l] / matrix[l][l];
+                if (newmatrix[i][l] != 0) {
+                    //newmatrix[i][l] = Math.round(newmatrix[i][l] * 1000000.0) / 1000000.0;
+                    //newmatrix[l][l] = Math.round(newmatrix[l][l] * 1000000.0) / 1000000.0;
+                    double temp = newmatrix[i][l] / newmatrix[l][l];
                     for (int j = l; j < cols; j++) {
-                        if (Math.abs(matrix[i][j] - (matrix[l][j] * temp)) <= 0.00000000001) {
-                            matrix[i][j] = 0;
+                        if (Math.abs(newmatrix[i][j] - (newmatrix[l][j] * temp)) <= 0.00000000001) {
+                            newmatrix[i][j] = 0;
                         } else {
-                            matrix[i][j] = matrix[i][j] - (matrix[l][j] * temp);
+                            //newmatrix[i][j] = Math.round(newmatrix[i][j] * 1000000.0) / 1000000.0;
+                            //newmatrix[l][j] = Math.round(newmatrix[l][j] * 1000000.0) / 1000000.0;
+                            newmatrix[i][j] = newmatrix[i][j] - (newmatrix[l][j] * temp);
                         }
                     }
                 } else {
                     tempp++;
                 }
             }
-            if (matrix[i][x] != 0) {
+            if (newmatrix[i][x] != 0) {
                 for (int k = cols - 1; k >= x; k--) {
-                    matrix[i][k] = matrix[i][k] / matrix[i][x];
+                    //newmatrix[i][k] = Math.round(newmatrix[i][k] * 1000000.0) / 1000000.0;
+                    //newmatrix[i][x] = Math.round(newmatrix[i][x] * 1000000.0) / 1000000.0;
+                    newmatrix[i][k] = newmatrix[i][k] / newmatrix[i][x];
                 }
             }
-            if (matrix[i][x] != 1 && x != cols - 1) {
+            if (newmatrix[i][x] != 1 && x != cols - 1) {
                 i--;
                 if (x == cols - 1) {
                     x = i;
@@ -65,18 +96,29 @@ public class Interpolasi {
         for (int i = rows - 1; i >= 0; i--) {
             double sum = 0.0;
             for (int j = i + 1; j < cols - 1; j++) {
-                sum = sum + (matrix[i][j] * solution[j]);
+                //newmatrix[i][j] = Math.round(newmatrix[i][j] * 1000000.0) / 1000000.0;
+                sum = sum + (newmatrix[i][j] * solution[j]);
             }
-            solution[i] = (matrix[i][cols - 1] - sum) / matrix[i][i];
+            //newmatrix[i][i] = Math.round(newmatrix[i][i] * 1000000.0) / 1000000.0;
+            solution[i] = (newmatrix[i][cols - 1] - sum) / newmatrix[i][i];
         }
 
         double hasil = 0;
-        double[] keluaran = new double[rows];
-        for (int i = 0; i < rows; i++) {
-            keluaran[i] = solution[i];
-            hasil = hasil + (Math.pow(nilai, i) * solution[i]);
+        double[] keluaran = new double[rows+3];
+        keluaran[0]=rows-1;
+        int j = 1;
+        for (int i = rows; i >=1; i--) {
+            //solution[i-1] = Math.round(solution[i-1] * 1000000.0) / 1000000.0;
+            keluaran[j] = solution[i-1];
+            //DecimalFormat df = new DecimalFormat("#.#########");
+            //hasil = hasil + (Math.pow(nilai, i-1) * Double.valueOf(df.format(solution[i-1])));
+            hasil = hasil + (Math.pow(nilai, i-1) * (solution[i-1]));
+            j++;
         }
-        keluaran[rows] = hasil;
+        hasil = Math.round(hasil * 1000000.0) / 1000000.0;
+        keluaran[rows+1] = nilai;
+        keluaran[rows+2] = hasil;
+        Fungsi.pause();
         return keluaran;
     }
 
@@ -152,11 +194,47 @@ public class Interpolasi {
                 k++;
             }
         }
-
-
         double[] balikan = { a, b, hasil };
         return balikan;
     }
 
-   
+    // Sub-menu Bicubic
+    /*
+     * public static void main(String[] args) {
+     * // KAMUS
+     * double[][] matrix;
+     * double a, b;
+     * 
+     * // ALGORITMA
+     * Scanner input = new Scanner(System.in);
+     * Map<String, Object> getMatrix = null;
+     * 
+     * // Metode mengambil matrix
+     * while (true) {
+     * System.out.println("Input matrix via:\n1. File (.txt)\n2. User");
+     * System.out.print("Via = ");
+     * String via = input.nextLine();
+     * if (via.equals("2")) {
+     * getMatrix = inputFromUser();
+     * break;
+     * } else if (via.equals("1")) {
+     * getMatrix = inputFromTxt();
+     * if (getMatrix != null) {
+     * break;
+     * }
+     * System.exit(0);
+     * } else {
+     * System.out.println("Input salah harap untuk input hanya \"1\" atau \"2\".");
+     * }
+     * }
+     * 
+     * input.close();
+     * 
+     * matrix = (double[][]) getMatrix.get("matrix");
+     * a = (double) getMatrix.get("a");
+     * b = (double) getMatrix.get("b");
+     * 
+     * interpolasiBicubic(matrix, a, b);
+     * }
+     */
 }

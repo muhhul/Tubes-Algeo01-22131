@@ -1,9 +1,14 @@
 package Special;
 
+import java.text.DecimalFormat;
+
+import General.Fungsi;
+import General.Konversi;
+
 public class RegresiLinearBerganda {
-    public static double[] regresiLinear(double[][] matriks, double nilai) {
+    public static double[] regresiLinear(double[][] matriks, double[] nilai) {
         int rows = matriks.length;
-        int cols = matriks[0].length;
+        int cols = matriks[1].length;
         double[][] newMatrix = new double[cols][cols + 1];
         double[] equation = new double[cols];
         double[] solution = new double[cols + 2];
@@ -52,16 +57,8 @@ public class RegresiLinearBerganda {
             int tempp = 0;
             for (int l = 0; l < x; l++) {
                 if (newMatrix[i][l] != 0) {
-                    System.out.println("Matriks yang:");
                     double temp = newMatrix[i][l] / newMatrix[l][l];
                     for (int j = l; j < cols; j++) {
-                        System.out.println("Matriks yang diinputkan:");
-                        for (int a = 0; a < rows; a++) {
-                            for (int b = 0; b < cols; b++) {
-                                System.out.print(newMatrix[a][b] + "\t");
-                            }
-                            System.out.println();
-                        }
                         if (Math.abs(newMatrix[i][j] - (newMatrix[l][j] * temp)) <= 0.00000000001) {
                             newMatrix[i][j] = 0;
                         } else {
@@ -97,14 +94,17 @@ public class RegresiLinearBerganda {
             }
             equation[i] = (newMatrix[i][cols - 1] - sum) / newMatrix[i][i];
         }
-        for (int k = 0; k < equation.length; k++) {
-            solution[k] = equation[k];
+        for (int i = 0; i < equation.length; i++) {
+            DecimalFormat df = new DecimalFormat("#.####");
+            solution[i] = Double.valueOf(df.format(equation[i]));
         }
         double hasil = 0;
-        for (int i = 0; i < cols - 1; i++) {
-            hasil = hasil + (Math.pow(x, i) * equation[i]);
+        for (int i = 1; i < equation.length; i++) {
+            hasil = hasil + (nilai[i-1] * equation[i]);
         }
-        solution[solution.length - 2] = nilai;
+        hasil = hasil + equation[0];
+        hasil = Math.round(hasil * 1000000.0) / 1000000.0;
+        solution[solution.length - 2] = nilai[0];
         solution[solution.length - 1] = hasil;
         return solution;
     }

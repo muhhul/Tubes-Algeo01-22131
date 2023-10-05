@@ -175,7 +175,7 @@ public class Main {
                             System.out.print("Jumlah titik: ");
                             n = input.nextInt();
                             System.out.print("Nilai x yang akan ditaksir: ");
-                            n = input.nextInt();
+                            x = input.nextDouble();
                             matriks = Input.inputMatriksKeyboard(n, 2);
                             break;
                         case 2:
@@ -245,7 +245,7 @@ public class Main {
                             matriks = Input.inputMatriksKeyboard(m, n + 1);
                             break;
                         case 2:
-                            argument = Input.inputBicubicFile();
+                            argument = Input.inputRegresiFile();
                             matriks = (double[][]) argument.get("matriks");
                             x = (double) argument.get("x");
                             break;
