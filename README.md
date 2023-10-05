@@ -4,10 +4,6 @@
 
 > "tinky winky dipsy lala puh sepuh, ajarin dong puh"
 
-
-
-## Tugas Besar 1 IF2123 Aljabar Linear dan Geometri 2023
-
 ## Anggota Ajarin Dong Puh Sepuh
 
 |   NIM    |          Nama          |         Hobi         |
