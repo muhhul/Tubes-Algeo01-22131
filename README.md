@@ -41,16 +41,21 @@ Secara garis besar, program ini merupakan program untuk memanipulasi matriks. Be
 
     1. Buka terminal di folder src, lalu jalankan :
 
-`javac -d ..\bin Matrix/*.java Functions/*.java Main/*.java`
+`javac -d ..\bin Matrix/*.java Functions/*.java Main.java`
 
     2. Buka terminal di folder bin, lalu jalankan :
 
-`java Main.Main`
+`java Main`
 
 Pastikan terdapat folder `result` di dalam folder `test` agar hasil perhitungan dapat disimpan!
 
-## Studi Kasus
+## Masukan dan Keluaran
 
+    Masukan dan keluaran dapat dilakukan melalui keyboard maupun file.
     Untuk melakukan pengetesan pada program menggunakan file, bisa menaruh file di folder 
 
 `test/case`
+    
+    Untuk keluaran menjadi sebuah file, akan diletakkan di folder
+`test/result`
+
