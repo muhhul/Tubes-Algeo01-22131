@@ -2,14 +2,13 @@
 
 # Tugas Besar 1 IF2123 Aljabar Linear dan Geometri 2023
 
-> Additional information or tagline
+> "tinky winky dipsy lala puh sepuh, ajarin dong puh"
 
-A brief description of your project, what it is used for and how does life get
-awesome when someone starts to use it.
+
 
 ## Tugas Besar 1 IF2123 Aljabar Linear dan Geometri 2023
 
-## Kelompok Ajarin Dong Puh Sepuh
+## Anggota Ajarin Dong Puh Sepuh
 
 |   NIM    |          Nama          |         Hobi         |
 | :------: | :--------------------: | :------------------: |
