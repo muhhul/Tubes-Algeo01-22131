@@ -186,12 +186,14 @@ public class Input {
 
             bufferedReader.close();
             fileReader.close();
-
+            
             // Memulai untuk membaca elemen matriks
             fileReader = new FileReader(filePath);
             bufferedReader = new BufferedReader(fileReader);
-
+            
             double[][] matriks = new double[rows - 1][cols];
+            bufferedReader.close();
+            fileReader.close();
 
             // Membaca elemen pada matriks dan menyimpannya pada variabel matriks
             int i = 0, j;
@@ -210,8 +212,6 @@ public class Input {
             Map<String, Object> result = new HashMap<>();
             result.put("matriks", matriks);
             result.put("array", array);
-            bufferedReader.close();
-            fileReader.close();
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -282,11 +282,7 @@ public class Input {
             a = Double.parseDouble(elemen[0]);
             b = Double.parseDouble(elemen[1]);
 
-            /*
-             * Fungsi.displayMatrix(matrix);
-             * System.out.println("a = " + a);
-             * System.out.println("b = " + b);
-             */
+
 
             bufferedReader.close();
             fileReader.close();

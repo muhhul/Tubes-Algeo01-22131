@@ -2,12 +2,9 @@ package Special;
 
 import General.OperasiMatriks;
 
-import java.text.DecimalFormat;
-import java.util.Scanner;
 
 import General.Fungsi;
 import General.InversMatriks;
-import General.Konversi;
 
 public class Interpolasi {
 
@@ -27,9 +24,7 @@ public class Interpolasi {
                     newmatrix[i][j]=temp;
                 }else{
                     newmatrix[i][j]=Math.pow(temp, j);
-                    //DecimalFormat df = new DecimalFormat("#.#########");
-                    //newmatrix[i][j] = Double.valueOf(df.format(newmatrix[i][j]));
-                    //newmatrix[i][j] = Math.round(newmatrix[i][j] * 1000000.0) / 1000000.0;
+
                 }
             }
         }
@@ -55,15 +50,13 @@ public class Interpolasi {
             int tempp = 0;
             for (int l = 0; l < x; l++) {
                 if (newmatrix[i][l] != 0) {
-                    //newmatrix[i][l] = Math.round(newmatrix[i][l] * 1000000.0) / 1000000.0;
-                    //newmatrix[l][l] = Math.round(newmatrix[l][l] * 1000000.0) / 1000000.0;
+ 
                     double temp = newmatrix[i][l] / newmatrix[l][l];
                     for (int j = l; j < cols; j++) {
                         if (Math.abs(newmatrix[i][j] - (newmatrix[l][j] * temp)) <= 0.00000000001) {
                             newmatrix[i][j] = 0;
                         } else {
-                            //newmatrix[i][j] = Math.round(newmatrix[i][j] * 1000000.0) / 1000000.0;
-                            //newmatrix[l][j] = Math.round(newmatrix[l][j] * 1000000.0) / 1000000.0;
+
                             newmatrix[i][j] = newmatrix[i][j] - (newmatrix[l][j] * temp);
                         }
                     }
@@ -73,8 +66,7 @@ public class Interpolasi {
             }
             if (newmatrix[i][x] != 0) {
                 for (int k = cols - 1; k >= x; k--) {
-                    //newmatrix[i][k] = Math.round(newmatrix[i][k] * 1000000.0) / 1000000.0;
-                    //newmatrix[i][x] = Math.round(newmatrix[i][x] * 1000000.0) / 1000000.0;
+
                     newmatrix[i][k] = newmatrix[i][k] / newmatrix[i][x];
                 }
             }
@@ -96,10 +88,10 @@ public class Interpolasi {
         for (int i = rows - 1; i >= 0; i--) {
             double sum = 0.0;
             for (int j = i + 1; j < cols - 1; j++) {
-                //newmatrix[i][j] = Math.round(newmatrix[i][j] * 1000000.0) / 1000000.0;
+
                 sum = sum + (newmatrix[i][j] * solution[j]);
             }
-            //newmatrix[i][i] = Math.round(newmatrix[i][i] * 1000000.0) / 1000000.0;
+
             solution[i] = (newmatrix[i][cols - 1] - sum) / newmatrix[i][i];
         }
 
@@ -108,10 +100,9 @@ public class Interpolasi {
         keluaran[0]=rows-1;
         int j = 1;
         for (int i = rows; i >=1; i--) {
-            //solution[i-1] = Math.round(solution[i-1] * 1000000.0) / 1000000.0;
+
             keluaran[j] = Math.round(solution[i-1] * 1000000.0) / 1000000.0;
-            //DecimalFormat df = new DecimalFormat("#.#########");
-            //hasil = hasil + (Math.pow(nilai, i-1) * Double.valueOf(df.format(solution[i-1])));
+
             hasil = hasil + (Math.pow(nilai, i-1) * (solution[i-1]));
             j++;
         }
@@ -187,6 +178,7 @@ public class Interpolasi {
         // ---> Y x X^(-1) = a
         double[][] koefisien = OperasiMatriks.multiplyMatrix(MbicubicInverse, Y);
 
+        //f(a,b) = k * a^i + b^j
         k = 0;
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
@@ -198,43 +190,5 @@ public class Interpolasi {
         return balikan;
     }
 
-    // Sub-menu Bicubic
-    /*
-     * public static void main(String[] args) {
-     * // KAMUS
-     * double[][] matrix;
-     * double a, b;
-     * 
-     * // ALGORITMA
-     * Scanner input = new Scanner(System.in);
-     * Map<String, Object> getMatrix = null;
-     * 
-     * // Metode mengambil matrix
-     * while (true) {
-     * System.out.println("Input matrix via:\n1. File (.txt)\n2. User");
-     * System.out.print("Via = ");
-     * String via = input.nextLine();
-     * if (via.equals("2")) {
-     * getMatrix = inputFromUser();
-     * break;
-     * } else if (via.equals("1")) {
-     * getMatrix = inputFromTxt();
-     * if (getMatrix != null) {
-     * break;
-     * }
-     * System.exit(0);
-     * } else {
-     * System.out.println("Input salah harap untuk input hanya \"1\" atau \"2\".");
-     * }
-     * }
-     * 
-     * input.close();
-     * 
-     * matrix = (double[][]) getMatrix.get("matrix");
-     * a = (double) getMatrix.get("a");
-     * b = (double) getMatrix.get("b");
-     * 
-     * interpolasiBicubic(matrix, a, b);
-     * }
-     */
+
 }
