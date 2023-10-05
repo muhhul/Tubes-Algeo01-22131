@@ -1,0 +1,6 @@
+File dibuat pada: 01-10-2023 17-07-59
+==============================
+             OUTPUT             
+==============================
+
+Matriks tidak memiliki determinan.
