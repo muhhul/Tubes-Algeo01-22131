@@ -203,13 +203,13 @@ public class Input {
                 i++;
             }
             String[] elemen = line.split(" ");
-            Double[] array = new Double[elemen.length];
+            double[] array = new double[elemen.length];
             for (i = 0; i < elemen.length; i++) {
                 array[i] = Double.parseDouble(elemen[i]);
             }
             Map<String, Object> result = new HashMap<>();
             result.put("matriks", matriks);
-            result.put("x", array);
+            result.put("array", array);
             bufferedReader.close();
             fileReader.close();
             return result;

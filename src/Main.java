@@ -254,13 +254,17 @@ public class Main {
                             argument = Input.inputRegresiFile();
                             matriks = (double[][]) argument.get("matriks");
                             array = (double[]) argument.get("array");
+                            
                             break;
                         default:
                             System.out.println("Input salah!");
                             break;
                     }
+
                     luaran = luaran
                             .concat(Konversi.regresiKeString(RegresiLinearBerganda.regresiLinear(matriks, array)));
+
+                    
                     pilMetode = Fungsi.metodeOutput();
                     if (pilMetode == 1) {
                         Output.cetakLuaran(luaran);

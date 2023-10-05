@@ -109,7 +109,7 @@ public class Interpolasi {
         int j = 1;
         for (int i = rows; i >=1; i--) {
             //solution[i-1] = Math.round(solution[i-1] * 1000000.0) / 1000000.0;
-            keluaran[j] = solution[i-1];
+            keluaran[j] = Math.round(solution[i-1] * 1000000.0) / 1000000.0;
             //DecimalFormat df = new DecimalFormat("#.#########");
             //hasil = hasil + (Math.pow(nilai, i-1) * Double.valueOf(df.format(solution[i-1])));
             hasil = hasil + (Math.pow(nilai, i-1) * (solution[i-1]));
