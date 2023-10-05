@@ -180,7 +180,7 @@ public class Input {
             // Mengukur ukuran matriks pada txt file
             while ((line = bufferedReader.readLine()) != null) {
                 String[] elemen = line.split(" ");
-                cols = elemen.length+1; //diubah
+                cols = elemen.length + 1; // diubah
                 rows++;
             }
 
@@ -200,15 +200,16 @@ public class Input {
                 for (j = 0; j < cols; j++) {
                     matriks[i][j] = Float.parseFloat(elemen[j]);
                 }
-
                 i++;
             }
             String[] elemen = line.split(" ");
-
-            x = Double.parseDouble(elemen[0]);
+            Double[] array = new Double[elemen.length];
+            for (i = 0; i < elemen.length; i++) {
+                array[i] = Double.parseDouble(elemen[i]);
+            }
             Map<String, Object> result = new HashMap<>();
             result.put("matriks", matriks);
-            result.put("x", x);
+            result.put("x", array);
             bufferedReader.close();
             fileReader.close();
             return result;

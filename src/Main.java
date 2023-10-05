@@ -9,10 +9,11 @@ public class Main {
     public static Scanner input;
 
     public static void main(String[] args) {
-        int pilMenu = 0, pilSub = 0, pilMetode = 0, m = 0, n = 0;
+        int pilMenu = 0, pilSub = 0, pilMetode = 0, m = 0, n = 0, i;
         double a, b, x;
         boolean operation = true;
         double[][] matriks = null;
+        double[] array = null;
         String luaran;
         Map<String, Object> argument;
 
@@ -232,7 +233,7 @@ public class Main {
                     }
                     break;
                 case 6:
-                    x = 0;
+                    int cols;
                     pilMetode = Fungsi.metodeInput();
                     switch (pilMetode) {
                         case 1:
@@ -240,19 +241,26 @@ public class Main {
                             n = input.nextInt();
                             System.out.print("Jumlah sampel: ");
                             m = input.nextInt();
-                            System.out.print("Nilai x yang akan ditaksir:  ");
-                            x = input.nextInt();
                             matriks = Input.inputMatriksKeyboard(m, n + 1);
+                            cols = matriks[0].length;
+                            array = new double[cols - 1];
+                            for (i = 0; i < cols - 1; i++) {
+                                System.out.print("Nilai x " + (i + 1) + "yang akan ditaksir:  ");
+                                array[i] = input.nextDouble();
+                                System.out.println("");
+                            }
                             break;
                         case 2:
                             argument = Input.inputRegresiFile();
                             matriks = (double[][]) argument.get("matriks");
-                            x = (double) argument.get("x");
+                            array = (double[]) argument.get("array");
                             break;
                         default:
                             System.out.println("Input salah!");
+                            break;
                     }
-                    luaran = luaran.concat(Konversi.regresiKeString(RegresiLinearBerganda.regresiLinear(matriks, x)));
+                    luaran = luaran
+                            .concat(Konversi.regresiKeString(RegresiLinearBerganda.regresiLinear(matriks, array)));
                     pilMetode = Fungsi.metodeOutput();
                     if (pilMetode == 1) {
                         Output.cetakLuaran(luaran);
